@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="本文对hackthebox平台上的challenge-pwn前两道题目进行分析记录。 0x01 little_tommy题目分析拿到elf文件，查看信息如下，为32位动态链接程序，开启NX保护。 直接拖到IDA里分析，程序为典型的功能式菜单。123451. Create account2. Display account3. Delete account4. Add memo5. Print fl">
+<meta property="og:type" content="article">
+<meta property="og:title" content="hackthebox pwn 入门">
+<meta property="og:url" content="http://yoursite.com/2019/03/14/hackthebox-pwn-入门/index.html">
+<meta property="og:site_name" content="Ha0Za1-Pages">
+<meta property="og:description" content="本文对hackthebox平台上的challenge-pwn前两道题目进行分析记录。 0x01 little_tommy题目分析拿到elf文件，查看信息如下，为32位动态链接程序，开启NX保护。 直接拖到IDA里分析，程序为典型的功能式菜单。123451. Create account2. Display account3. Delete account4. Add memo5. Print fl">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://yoursite.com/images/img1-1.png">
+<meta property="og:image" content="https://p1.ssl.qhimg.com/t01ebd08aafa195e4f5.png">
+<meta property="og:image" content="https://p1.ssl.qhimg.com/t014849107e1dcb3323.png">
+<meta property="og:image" content="https://p2.ssl.qhimg.com/t01f8fa0932c8fe705c.png">
+<meta property="og:image" content="https://p3.ssl.qhimg.com/t01088bf5d50e14d787.png">
+<meta property="og:image" content="https://p2.ssl.qhimg.com/t015e6e6800b657529b.png">
+<meta property="og:image" content="https://p0.ssl.qhimg.com/t01e5faa38a94f316ab.png">
+<meta property="og:image" content="https://p3.ssl.qhimg.com/t013458d2ddc6e3c364.png">
+<meta property="og:image" content="https://p2.ssl.qhimg.com/t01780820df6defe5d0.png">
+<meta property="og:image" content="https://p4.ssl.qhimg.com/t01d2a6ee11be01e0d2.png">
+<meta property="og:image" content="https://p1.ssl.qhimg.com/t016658fe34e34f14af.png">
+<meta property="og:image" content="https://p3.ssl.qhimg.com/t0109cf5bcb21c774bf.png">
+<meta property="og:image" content="https://p0.ssl.qhimg.com/t01c5d4f3c933fd8873.png">
+<meta property="og:image" content="https://p0.ssl.qhimg.com/t01be3a66c6253a5e57.png">
+<meta property="og:updated_time" content="2019-03-14T12:22:28.422Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="hackthebox pwn 入门">
+<meta name="twitter:description" content="本文对hackthebox平台上的challenge-pwn前两道题目进行分析记录。 0x01 little_tommy题目分析拿到elf文件，查看信息如下，为32位动态链接程序，开启NX保护。 直接拖到IDA里分析，程序为典型的功能式菜单。123451. Create account2. Display account3. Delete account4. Add memo5. Print fl">
+<meta name="twitter:image" content="http://yoursite.com/images/img1-1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/03/14/hackthebox-pwn-入门/">
+
+
+
+
+
+  <title>hackthebox pwn 入门 | Ha0Za1-Pages</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Ha0Za1-Pages</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/14/hackthebox-pwn-入门/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ha0Za1">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ha0Za1-Pages">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">hackthebox pwn 入门</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-14T19:44:12+08:00">
+                2019-03-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本文对hackthebox平台上的challenge-pwn前两道题目进行分析记录。</p>
+<h2 id="0x01-little-tommy"><a href="#0x01-little-tommy" class="headerlink" title="0x01 little_tommy"></a>0x01 little_tommy</h2><h3 id="题目分析"><a href="#题目分析" class="headerlink" title="题目分析"></a>题目分析</h3><p>拿到elf文件，查看信息如下，为32位动态链接程序，开启NX保护。<br><img src="/images/img1-1.png" alt="fileinfo.png" title="fileinfo.png"></p>
+<p>直接拖到IDA里分析，程序为典型的功能式菜单。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1. Create account</span><br><span class="line">2. Display account</span><br><span class="line">3. Delete account</span><br><span class="line">4. Add memo</span><br><span class="line">5. Print flag</span><br></pre></td></tr></table></figure></p>
+<p>下面对各具体功能进行分析：</p>
+<p><strong>Create account </strong><br><img src="https://p1.ssl.qhimg.com/t01ebd08aafa195e4f5.png" alt="createaccount.png" title="createaccount.png"></p>
+<p>该功能为：从控制台读取输入，分别作为<code>First Name</code>和<code>Last Name</code>存储在堆中，此堆地址存储在<code>0x0804A048 main_account</code>处，堆状态如下：<br><img src="https://p1.ssl.qhimg.com/t014849107e1dcb3323.png" alt="heapinfo.png" title="heapinfo.png"></p>
+<p><strong>Display account ：</strong>将存储的信息打印出来，此功能不加赘述</p>
+<p><strong>Delete account ：</strong><br><img src="https://p2.ssl.qhimg.com/t01f8fa0932c8fe705c.png" alt="deleteaccount.png" title="deleteaccount.png"><br>删除当前信息，该功能存在一处漏洞，即在free掉内存堆块后，堆块指针没有置零。</p>
+<p><strong>Add memo ：</strong><br><img src="https://p3.ssl.qhimg.com/t01088bf5d50e14d787.png" alt="addmemo.png" title="addmemo.png"></p>
+<p>输入一串字符串，然后进行字符串拷贝操作。此功能的关键在于<code>strdup</code>函数：</p>
+<blockquote>
+<p><code>strdup</code>为字符串拷贝函数，其内部调用<code>malloc</code>为变量分配内存，将字符串拷贝到新建的位置处。该函数一般和<code>free</code>函数成对使用。</p>
+</blockquote>
+<p><strong>Print flag：</strong><br><img src="https://p2.ssl.qhimg.com/t015e6e6800b657529b.png" alt="printflag.png" title="printflag.png"></p>
+<p>当<code>if</code>语句的条件成立时，则会成功拿到<code>flag</code>。</p>
+<h3 id="解题"><a href="#解题" class="headerlink" title="解题"></a>解题</h3><p>基于上述分析可知，破解此题的关键在于满足<strong>print flag</strong>功能中的<code>if</code>语句中的两个条件：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">条件1：main_account 非空</span><br><span class="line">条件2：*((_DWORD *)main_account + 16) == &apos;kcuf&apos; 即 *(main_account+16*4)==&apos;kcuf&apos;</span><br></pre></td></tr></table></figure></p>
+<p>由于<strong>Delete account</strong>在执行完<code>free</code>操作后，并没有把堆块指针置零，因此<code>main_account</code>中将一直存储有一个堆块指针，即<strong>条件1</strong>在执行完<strong>Create account</strong>操作后将会一直成立。</p>
+<p><strong>条件2</strong>即要求在申请的堆块的 <strong>0x40</strong> 偏移处的内存满足字符串 <code>kcuf</code>，即：</p>
+<p><img src="https://p0.ssl.qhimg.com/t01e5faa38a94f316ab.png" alt="heappwn.png" title="heappwn.png"></p>
+<p>由此自然想到在<strong>Create account</strong>中通过控制输入，在<code>main_account+0x40</code>处写入指定字符串。<br>但是，在上述对<strong>Create account</strong>的分析发现，<strong>Create account</strong>内部通过对字符串拷贝的限制和截止符的运用，使得其操作无法达到<code>main_account+0x40</code>内存处，因此要另辟蹊径了。</p>
+<p>我们把目光转向<strong>Add memo</strong>，在这个函数内部，包含字符串输入和字符串拷贝操作，且字符串拷贝函数<code>strdup</code>内部调用了<code>malloc</code>。因此可以提出这样的思路：</p>
+<ol>
+<li>调用<strong>Create account</strong>，申请堆块，输入信息</li>
+<li>释放掉上述堆块（由于上述堆块紧挨着<code>top chunk</code>，因此在<code>free</code>掉之后，会合并到<code>top chunk</code>）</li>
+<li>调用<strong>Add memo</strong>，控制输入的字符串内容，利用<code>strdup</code>内部的<code>malloc</code>操作，将步骤2中释放的内存区域从<code>top chunk</code>上切割下来，利用<code>strdup</code>的拷贝操作直接在指定区域填入指定的字符串<code>kcuf</code>。</li>
+<li>调用<strong>print flag</strong>，<code>if</code>条件成立，拿到<code>flag</code>。</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">//create account</span><br><span class="line">create(&quot;aaaa&quot;,&quot;bbbb&quot;)</span><br><span class="line">// free account to top chunk</span><br><span class="line">delete()</span><br><span class="line">// get the chunk from top chunk </span><br><span class="line">memo(&quot;c&quot;*0x40+&quot;fuck&quot;)</span><br></pre></td></tr></table></figure>
+<p>此时内存中的堆块状态如下：</p>
+<p><img src="https://p3.ssl.qhimg.com/t013458d2ddc6e3c364.png" alt="heappwnstate" title="heappwnstate"></p>
+<p>满足<code>if</code>条件，成功拿到<code>flag</code></p>
+<p><img src="https://p2.ssl.qhimg.com/t01780820df6defe5d0.png" alt="getflag.png" title="getflag.png"></p>
+<h2 id="0x02-ropme"><a href="#0x02-ropme" class="headerlink" title="0x02 ropme"></a>0x02 ropme</h2><h3 id="题目分析-1"><a href="#题目分析-1" class="headerlink" title="题目分析"></a>题目分析</h3><p>为64位程序，有NX保护。</p>
+<p><img src="https://p4.ssl.qhimg.com/t01d2a6ee11be01e0d2.png" alt="ropmefileinfo.png" title="ropmefileinfo.png"></p>
+<p>从反编译代码看，<code>s</code>位于<code>rbp-0x40</code>位置处，而<code>fgets</code>允许输入500个字符到<code>s</code>中，程序存在明显的栈溢出漏洞。</p>
+<p><img src="https://p1.ssl.qhimg.com/t016658fe34e34f14af.png" alt="baseinfo.png" title="baseinfo.png"></p>
+<p>可通过覆盖返回地址控制<code>eip</code>劫持程序流程，但是由于NX保护，不能在栈中直接打入shellcode执行，且程序中自身没有<code>system</code>函数的调用，因此本题目的整体思路是采用<strong>ret2libc</strong>的方式。</p>
+<h3 id="解题-1"><a href="#解题-1" class="headerlink" title="解题"></a>解题</h3><blockquote>
+<p><strong>ret2libc</strong> 即控制程序去执行<strong>libc</strong>中的函数，通常情况下选择<code>system(&quot;/bin/sh&quot;)</code>。</p>
+</blockquote>
+<p>整体的思路是：</p>
+<ol>
+<li>利用程序漏洞泄露某个libc函数的地址</li>
+<li>泄露libc的版本信息，获取<code>system</code>和<code>/bin/sh</code>的地址</li>
+<li>再次执行程序触发栈溢出，执行<code>system(&quot;/bin/sh&quot;)</code></li>
+</ol>
+<p>由于本程序为64位程序，不同于32位的栈中存参数的方式，根据其调用约定，前六个参数存储在 RDI, RSI, RDX, RCX, R8 和 R9 寄存器中。收集一下程序中可用的<code>gadget</code>，这里具有使用价值的是<code>0x4006d3 pop rdi; ret</code>，我们可以在栈中依次放入<code>argc_addr</code>和<code>api_addr</code>，则这段<code>gadget</code>则相当于执行<code>api(argc)</code>。<br><img src="https://p3.ssl.qhimg.com/t0109cf5bcb21c774bf.png" alt="gadget.png" title="gadget.png"></p>
+<p><strong>step1 : 泄露libc中<code>puts</code>函数地址</strong><br>这里我们利用<code>puts</code>函数打印其自身地址，并重新返回<code>main</code>流程，payload构造如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">payload1 = &apos;a&apos;*0x40+&apos;b&apos;*8</span><br><span class="line">payload1 += p64(0x4006d3) # pop rdi ; ret</span><br><span class="line">payload1 += p64(0x601018) # puts@got.plt</span><br><span class="line">payload1 += p64(0x4004e0) # call puts</span><br><span class="line">payload1 += p64(0x400626) # main</span><br></pre></td></tr></table></figure></p>
+<p><strong>step2：获取libc的版本以及<code>system</code>、<code>/bin/sh</code>信息</strong></p>
+<p>通过上一部分获取到libc中的puts函数地址<code>puts_addr</code>，进一步根据此地址来泄露libc的版本信息。<br>这里可以利用的工具和网站有很多</p>
+<ol>
+<li><a href="https://github.com/lieanu/libc-database" target="_blank" rel="noopener">libc-database github</a>  数据库搜索</li>
+<li><a href="https://libc.blukat.me/" target="_blank" rel="noopener">libc database search</a> 在线查询</li>
+<li><a href="https://github.com/lieanu/LibcSearcher" target="_blank" rel="noopener">LibcSearcher</a> 工具</li>
+</ol>
+<p>这里成功拿到<code>system</code>函数地址<code>system_addr</code>，而对于字符串<code>/bin/sh</code>，可以有多种方式。</p>
+<ol>
+<li>利用libc中的字符串</li>
+<li>利用程序中已有的字符串</li>
+<li>由用户自行输入并读取</li>
+</ol>
+<p>这里同样可以利用前文的方法获取libc中的字符串地址，也可以直接利用程序字符串表中的<code>0x40038f</code>处的<code>sh</code>字符串。</p>
+<p><img src="https://p0.ssl.qhimg.com/t01c5d4f3c933fd8873.png" alt="stringtable.png" title="stringtable.png"></p>
+<p><strong>step3：再次触发栈溢出执行<code>system(&quot;/bin/sh&quot;)</code></strong></p>
+<p>在<strong>step1</strong>执行完后，程序会继续返回到<strong>main</strong>函数，我们可以再次实现栈溢出通过控制返回地址拿到shell，payload布局如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">payload2 = &apos;a&apos;*0x40+&apos;b&apos;*8</span><br><span class="line">payload2 += p64(0x4006d3) # pop rdi ; ret</span><br><span class="line">payload2 += p64(str_sh_addr) # addr of &quot;/bin/sh&quot;</span><br><span class="line">payload2 += p64(system_addr) # call system</span><br><span class="line">payload2 += p64(0x400626) # main</span><br></pre></td></tr></table></figure></p>
+<p>由此即可获取shell，拿到flag。<br><img src="https://p0.ssl.qhimg.com/t01be3a66c6253a5e57.png" alt="getflag.png" title="getflag.png"></p>
+<h2 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h2><p>本文的两道题目，一个基于堆一个基于栈，难度适宜，适合入门上车。<br>由于hackthebox的官方规则，这里就不直接放出完整利用代码，取而代之，把解题思路从头到尾与大家一同分享，盼共同学习提高。<br>后续会继续带来其他challenge。</p>
+<p><strong>reference：</strong><br><a href="https://ctf-wiki.github.io/ctf-wiki/pwn/linux/stackoverflow/stack-intro/" target="_blank" rel="noopener">https://ctf-wiki.github.io/ctf-wiki/pwn/linux/stackoverflow/stack-intro/</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Ha0Za1</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/yourname" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#0x01-little-tommy"><span class="nav-number">1.</span> <span class="nav-text">0x01 little_tommy</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#题目分析"><span class="nav-number">1.1.</span> <span class="nav-text">题目分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解题"><span class="nav-number">1.2.</span> <span class="nav-text">解题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x02-ropme"><span class="nav-number">2.</span> <span class="nav-text">0x02 ropme</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#题目分析-1"><span class="nav-number">2.1.</span> <span class="nav-text">题目分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解题-1"><span class="nav-number">2.2.</span> <span class="nav-text">解题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结束语"><span class="nav-number">3.</span> <span class="nav-text">结束语</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">mo7laviiin</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

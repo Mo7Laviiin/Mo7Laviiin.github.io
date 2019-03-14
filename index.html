@@ -239,7 +239,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/14/HTB/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/14/hackthebox-pwn-入门/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Ha0Za1">
@@ -258,7 +258,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/03/14/HTB/" itemprop="url">HTB</a></h1>
+                <a class="post-title-link" href="/2019/03/14/hackthebox-pwn-入门/" itemprop="url">hackthebox pwn 入门</a></h1>
         
 
         <div class="post-meta">
@@ -270,7 +270,7 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-14T19:31:06+08:00">
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-14T19:44:12+08:00">
                 2019-03-14
               </time>
             
@@ -310,145 +310,13 @@
       
         
           
-          
-          
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/03/14/HTB/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/31/HackTheBox-pwn/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Ha0Za1">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Ha0Za1-Pages">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/01/31/HackTheBox-pwn/" itemprop="url">HackTheBox-pwn</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-01-31T09:59:27+08:00">
-                2019-01-31
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          HackTheBox-pwn靶机实战0x01
-system(“/bin/cat flag”)
-
-heap -&gt; malloc -&gt; free -&gt; strdup
-漏洞点：
-
-free掉内存堆块之，指针没有置零。
-strdup 得到的内存块是刚刚释放的堆块，实现指定地址内存的复写。
-
+          本文对hackthebox平台上的challenge-pwn前两道题目进行分析记录。
+0x01 little_tommy题目分析拿到elf文件，查看信息如下，为32位动态链接程序，开启NX保护。
+直接拖到IDA里分析，程序为典型的功能式菜单。123451. Create account2. Disp
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2019/01/31/HackTheBox-pwn/#more" rel="contents">
+            <a class="btn" href="/2019/03/14/hackthebox-pwn-入门/#more" rel="contents">
               Read more &raquo;
             </a>
           </div>
@@ -532,7 +400,7 @@ strdup 得到的内存块是刚刚释放的堆块，实现指定地址内存的�
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">1</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
