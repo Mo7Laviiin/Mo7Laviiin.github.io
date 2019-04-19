@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="htb,">
+  <meta name="keywords" content="htb walkthrough,">
 
 
 
@@ -79,13 +79,13 @@
 
 
 
-<meta name="description" content="lame walkthroughftp端口扫描：  首先分析21端口ftp服务 发现2.3.4版本存在一个后门漏洞  利用metasploit尝试进行漏洞利用  利用不成功。 samba再来分析139/445端口的samba服务：  同样利用metasploit进行漏洞利用：  漏洞利用成功，直接拿到root shell 分别找到user.txt和root.txt两枚Flag  what’s mo">
-<meta name="keywords" content="htb">
+<meta name="description" content="ftp端口扫描：  首先分析21端口ftp服务 发现2.3.4版本存在一个后门漏洞  利用metasploit尝试进行漏洞利用  利用不成功。 samba再来分析139/445端口的samba服务：  同样利用metasploit进行漏洞利用：  漏洞利用成功，直接拿到root shell 分别找到user.txt和root.txt两枚Flag  what’s more上述是直接使用metaspl">
+<meta name="keywords" content="htb walkthrough">
 <meta property="og:type" content="article">
 <meta property="og:title" content="htb lame walkthrough">
 <meta property="og:url" content="http://yoursite.com/2019/04/19/htb-lame-walkthrough/index.html">
 <meta property="og:site_name" content="Ha0Za1-Pages">
-<meta property="og:description" content="lame walkthroughftp端口扫描：  首先分析21端口ftp服务 发现2.3.4版本存在一个后门漏洞  利用metasploit尝试进行漏洞利用  利用不成功。 samba再来分析139/445端口的samba服务：  同样利用metasploit进行漏洞利用：  漏洞利用成功，直接拿到root shell 分别找到user.txt和root.txt两枚Flag  what’s mo">
+<meta property="og:description" content="ftp端口扫描：  首先分析21端口ftp服务 发现2.3.4版本存在一个后门漏洞  利用metasploit尝试进行漏洞利用  利用不成功。 samba再来分析139/445端口的samba服务：  同样利用metasploit进行漏洞利用：  漏洞利用成功，直接拿到root shell 分别找到user.txt和root.txt两枚Flag  what’s more上述是直接使用metaspl">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/2019/04/19/htb-lame-walkthrough/nmap_target.png">
 <meta property="og:image" content="http://yoursite.com/2019/04/19/htb-lame-walkthrough/searchsploit_vsftpd.png">
@@ -94,10 +94,10 @@
 <meta property="og:image" content="http://yoursite.com/2019/04/19/htb-lame-walkthrough/samba_exploit.png">
 <meta property="og:image" content="http://yoursite.com/2019/04/19/htb-lame-walkthrough/flag.png">
 <meta property="og:image" content="http://yoursite.com/2019/04/19/htb-lame-walkthrough/smbclient_nc_getshell.png">
-<meta property="og:updated_time" content="2019-04-19T05:01:14.503Z">
+<meta property="og:updated_time" content="2019-04-19T05:04:48.664Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="htb lame walkthrough">
-<meta name="twitter:description" content="lame walkthroughftp端口扫描：  首先分析21端口ftp服务 发现2.3.4版本存在一个后门漏洞  利用metasploit尝试进行漏洞利用  利用不成功。 samba再来分析139/445端口的samba服务：  同样利用metasploit进行漏洞利用：  漏洞利用成功，直接拿到root shell 分别找到user.txt和root.txt两枚Flag  what’s mo">
+<meta name="twitter:description" content="ftp端口扫描：  首先分析21端口ftp服务 发现2.3.4版本存在一个后门漏洞  利用metasploit尝试进行漏洞利用  利用不成功。 samba再来分析139/445端口的samba服务：  同样利用metasploit进行漏洞利用：  漏洞利用成功，直接拿到root shell 分别找到user.txt和root.txt两枚Flag  what’s more上述是直接使用metaspl">
 <meta name="twitter:image" content="http://yoursite.com/2019/04/19/htb-lame-walkthrough/nmap_target.png">
 
 
@@ -318,7 +318,7 @@
       
 
       
-        <h1 id="lame-walkthrough"><a href="#lame-walkthrough" class="headerlink" title="lame walkthrough"></a>lame walkthrough</h1><h2 id="ftp"><a href="#ftp" class="headerlink" title="ftp"></a>ftp</h2><p><strong>端口扫描</strong>：</p>
+        <h2 id="ftp"><a href="#ftp" class="headerlink" title="ftp"></a>ftp</h2><p><strong>端口扫描</strong>：</p>
 <p><img src="nmap_target.png" alt="nmap_scan"></p>
 <p>首先分析21端口ftp服务</p>
 <p>发现2.3.4版本存在一个后门漏洞</p>
@@ -354,7 +354,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/htb/" rel="tag"># htb</a>
+            <a href="/tags/htb-walkthrough/" rel="tag"># htb walkthrough</a>
           
         </div>
       
@@ -494,7 +494,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#lame-walkthrough"><span class="nav-number">1.</span> <span class="nav-text">lame walkthrough</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ftp"><span class="nav-number">1.1.</span> <span class="nav-text">ftp</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#samba"><span class="nav-number">1.2.</span> <span class="nav-text">samba</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#what’s-more"><span class="nav-number">1.3.</span> <span class="nav-text">what’s more</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#ftp"><span class="nav-number">1.</span> <span class="nav-text">ftp</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#samba"><span class="nav-number">2.</span> <span class="nav-text">samba</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#what’s-more"><span class="nav-number">3.</span> <span class="nav-text">what’s more</span></a></li></ol></div>
             
 
           </div>
