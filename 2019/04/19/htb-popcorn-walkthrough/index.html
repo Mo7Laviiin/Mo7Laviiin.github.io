@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="htb walkthrough,">
 
 
 
@@ -79,16 +79,33 @@
 
 
 
-<meta name="description" content="余不等伞，亦不等雨停">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Ha0Za1-Pages">
-<meta property="og:url" content="http://yoursite.com/archives/index.html">
+<meta name="description" content="扫描端口信息：  访问80端口web服务：  无可用信息，进行子目录爆破：  发现torrent子目录，访问：  观察网站信息，发现了注册用户：  简要分析网站，发现其为torrent管理网站，可上传torrent，猜测可能存在文件上传漏洞 searchsploit结果验证了猜想  经过摸索，发现上传漏洞并不位于torrent文件的上传，而存在于browse -&amp;gt; edit this tor">
+<meta name="keywords" content="htb walkthrough">
+<meta property="og:type" content="article">
+<meta property="og:title" content="htb-popcorn-walkthrough">
+<meta property="og:url" content="http://yoursite.com/2019/04/19/htb-popcorn-walkthrough/index.html">
 <meta property="og:site_name" content="Ha0Za1-Pages">
-<meta property="og:description" content="余不等伞，亦不等雨停">
+<meta property="og:description" content="扫描端口信息：  访问80端口web服务：  无可用信息，进行子目录爆破：  发现torrent子目录，访问：  观察网站信息，发现了注册用户：  简要分析网站，发现其为torrent管理网站，可上传torrent，猜测可能存在文件上传漏洞 searchsploit结果验证了猜想  经过摸索，发现上传漏洞并不位于torrent文件的上传，而存在于browse -&amp;gt; edit this tor">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2019/04/19/htb-popcorn-walkthrough/nmap.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/19/htb-popcorn-walkthrough/main_page.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/19/htb-popcorn-walkthrough/wfuzz_torrent.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/19/htb-popcorn-walkthrough/torrent_hoster_page.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/19/htb-popcorn-walkthrough/torrent_register.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/19/htb-popcorn-walkthrough/searchsploit_torrent_hoster.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/19/htb-popcorn-walkthrough/torrent_browser.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/19/htb-popcorn-walkthrough/edit_torrent.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/19/htb-popcorn-walkthrough/burpsuite.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/19/htb-popcorn-walkthrough/get_php_reverse_shell.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/19/htb-popcorn-walkthrough/user_txt.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/19/htb-popcorn-walkthrough/uname_searchsploit.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/19/htb-popcorn-walkthrough/priviledge_escalation.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/19/htb-popcorn-walkthrough/root_txt.png">
+<meta property="og:updated_time" content="2019-04-19T11:02:27.573Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Ha0Za1-Pages">
-<meta name="twitter:description" content="余不等伞，亦不等雨停">
+<meta name="twitter:title" content="htb-popcorn-walkthrough">
+<meta name="twitter:description" content="扫描端口信息：  访问80端口web服务：  无可用信息，进行子目录爆破：  发现torrent子目录，访问：  观察网站信息，发现了注册用户：  简要分析网站，发现其为torrent管理网站，可上传torrent，猜测可能存在文件上传漏洞 searchsploit结果验证了猜想  经过摸索，发现上传漏洞并不位于torrent文件的上传，而存在于browse -&amp;gt; edit this tor">
+<meta name="twitter:image" content="http://yoursite.com/2019/04/19/htb-popcorn-walkthrough/nmap.png">
 
 
 
@@ -118,13 +135,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/archives/">
+  <link rel="canonical" href="http://yoursite.com/2019/04/19/htb-popcorn-walkthrough/">
 
 
 
 
 
-  <title>归档 | Ha0Za1-Pages</title>
+  <title>htb-popcorn-walkthrough | Ha0Za1-Pages</title>
   
 
 
@@ -143,7 +160,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
@@ -227,107 +244,176 @@
           <div id="content" class="content">
             
 
+  <div id="posts" class="posts-expand">
+    
+
+  
+
   
   
   
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
-
-      <span class="archive-page-counter">
-        
-        
-        
-          
-        
-        嗯..! 目前共计 2 篇日志。 继续努力。
-      </span>
-
-      
-
-        
-        
-        
-
-        
-          
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2019">2019</h1>
-          </div>
-        
-        
-
-        
 
   <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/19/htb-popcorn-walkthrough/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ha0Za1">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.JPG">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ha0Za1-Pages">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2019/04/19/htb-popcorn-walkthrough/" itemprop="url">
-              
-                <span itemprop="name">htb-popcorn-walkthrough</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">htb-popcorn-walkthrough</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-04-19T18:55:57+08:00" content="2019-04-19">
-          04-19
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-19T18:55:57+08:00">
+                2019-04-19
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
 
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/04/19/htb-lame-walkthrough/" itemprop="url">
-              
-                <span itemprop="name">htb lame walkthrough</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-04-19T12:55:19+08:00" content="2019-04-19">
-          04-19
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
+      
+        <p>扫描端口信息：</p>
+<p><img src="nmap.png" alt="nmap"></p>
+<p>访问80端口web服务：</p>
+<p><img src="main_page.png" alt="web_page"></p>
+<p>无可用信息，进行子目录爆破：</p>
+<p><img src="wfuzz_torrent.png" alt="wfuzz_torrent"></p>
+<p>发现<strong>torrent</strong>子目录，访问：</p>
+<p><img src="torrent_hoster_page.png" alt="torrent_hoster_page"></p>
+<p>观察网站信息，发现了注册用户：</p>
+<p><img src="torrent_register.png" alt="torrent_register"></p>
+<p>简要分析网站，发现其为<code>torrent</code>管理网站，可上传<code>torrent</code>，猜测可能存在文件上传漏洞</p>
+<p><code>searchsploit</code>结果验证了猜想</p>
+<p><img src="searchsploit_torrent_hoster.png" alt="searchsploit_torrent"></p>
+<p>经过摸索，发现上传漏洞并不位于<code>torrent</code>文件的上传，而存在于<code>browse -&gt; edit this torrent</code>页面中</p>
+<p><img src="torrent_browser.png" alt="browse_torrent"></p>
+<p>进入页面，上传php reverse shell文件，注意以jpg为后缀</p>
+<p><img src="edit_torrent.png" alt="edit_torrent"></p>
+<p><strong>burpsuite</strong>拦截，将.jpg后缀去掉，即可成功将php文件上传：</p>
+<p><img src="burpsuite.png" alt="burpsuite"></p>
+<p>nc开启端口监听，web访问上传的php文件，成功获得shell</p>
+<p><img src="get_php_reverse_shell.png" alt="get_reverse_shell"></p>
+<p>拿到<strong>user.txt</strong></p>
+<p><img src="user_txt.png" alt="user_shell"></p>
+<p>分析，当前<strong>www-data</strong>用户权限有限，尝试进行提权</p>
+<p>首先查看基本信息，找到相应的可提权漏洞：</p>
+<p><img src="uname_searchsploit.png" alt="uname"></p>
+<p>利用代码拉到靶机上编译，执行，成功提权：</p>
+<p><img src="priviledge_escalation.png" alt="priviledge_escalation"></p>
+<p>找到<strong>root.txt</strong></p>
+<p><img src="root_txt.png" alt="root_txt"></p>
+
+      
     </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/htb-walkthrough/" rel="tag"># htb walkthrough</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/19/htb-lame-walkthrough/" rel="next" title="htb lame walkthrough">
+                <i class="fa fa-chevron-left"></i> htb lame walkthrough
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -335,6 +421,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -561,6 +651,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
