@@ -79,26 +79,36 @@
 
 
 
-<meta name="description" content="ftp端口扫描：  首先分析21端口ftp服务 发现2.3.4版本存在一个后门漏洞  利用metasploit尝试进行漏洞利用  利用不成功。 samba再来分析139/445端口的samba服务：  同样利用metasploit进行漏洞利用：  漏洞利用成功，直接拿到root shell 分别找到user.txt和root.txt两枚Flag  what’s more上述是直接使用metaspl">
+<meta name="description" content="user.txt查看靶机端口信息：  开放了80端口，访问web服务：  没有有效信息，进行子目录爆破：  找到uploads和exposed.php，访问exposed.php页面：  尝试改变输入为百度的域名，查看返回页面源码：  查看到了curl信息，猜测靶机通过curl命令来访问所输入的url 结合爆破出的uploads目录，有如下思路：通过curl上传php-shell文件，然后通过we">
 <meta name="keywords" content="htb walkthrough">
 <meta property="og:type" content="article">
-<meta property="og:title" content="htb lame walkthrough">
-<meta property="og:url" content="http://yoursite.com/2019/04/19/htb-lame-walkthrough/index.html">
+<meta property="og:title" content="htb-haircut-walkthrough">
+<meta property="og:url" content="http://yoursite.com/2019/04/21/htb-haircut-walkthrough/index.html">
 <meta property="og:site_name" content="Ha0Za1-Pages">
-<meta property="og:description" content="ftp端口扫描：  首先分析21端口ftp服务 发现2.3.4版本存在一个后门漏洞  利用metasploit尝试进行漏洞利用  利用不成功。 samba再来分析139/445端口的samba服务：  同样利用metasploit进行漏洞利用：  漏洞利用成功，直接拿到root shell 分别找到user.txt和root.txt两枚Flag  what’s more上述是直接使用metaspl">
+<meta property="og:description" content="user.txt查看靶机端口信息：  开放了80端口，访问web服务：  没有有效信息，进行子目录爆破：  找到uploads和exposed.php，访问exposed.php页面：  尝试改变输入为百度的域名，查看返回页面源码：  查看到了curl信息，猜测靶机通过curl命令来访问所输入的url 结合爆破出的uploads目录，有如下思路：通过curl上传php-shell文件，然后通过we">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/2019/04/19/htb-lame-walkthrough/nmap_target.png">
-<meta property="og:image" content="http://yoursite.com/2019/04/19/htb-lame-walkthrough/searchsploit_vsftpd.png">
-<meta property="og:image" content="http://yoursite.com/2019/04/19/htb-lame-walkthrough/exploit_ftp.png">
-<meta property="og:image" content="http://yoursite.com/2019/04/19/htb-lame-walkthrough/searchsploit_samba.png">
-<meta property="og:image" content="http://yoursite.com/2019/04/19/htb-lame-walkthrough/samba_exploit.png">
-<meta property="og:image" content="http://yoursite.com/2019/04/19/htb-lame-walkthrough/flag.png">
-<meta property="og:image" content="http://yoursite.com/2019/04/19/htb-lame-walkthrough/smbclient_nc_getshell.png">
-<meta property="og:updated_time" content="2019-04-19T05:04:48.664Z">
+<meta property="og:image" content="http://yoursite.com/2019/04/21/htb-haircut-walkthrough/nmap.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/21/htb-haircut-walkthrough/main_page.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/21/htb-haircut-walkthrough/dirbuster.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/21/htb-haircut-walkthrough/exposed_php.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/21/htb-haircut-walkthrough/get_baidu.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/21/htb-haircut-walkthrough/python_http.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/21/htb-haircut-walkthrough/burpsuite_original.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/21/htb-haircut-walkthrough/burpsuite_upload.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/21/htb-haircut-walkthrough/get_nc_shell.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/21/htb-haircut-walkthrough/user_txt.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/21/htb-haircut-walkthrough/find_suid_root.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/21/htb-haircut-walkthrough/searchsploit_screen.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/21/htb-haircut-walkthrough/41154_sh.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/21/htb-haircut-walkthrough/libhax_c_rootshell_c.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/21/htb-haircut-walkthrough/gcc.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/21/htb-haircut-walkthrough/wget_libhax_rootshell.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/21/htb-haircut-walkthrough/exploit_root_txt.png">
+<meta property="og:updated_time" content="2019-04-20T17:31:45.696Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="htb lame walkthrough">
-<meta name="twitter:description" content="ftp端口扫描：  首先分析21端口ftp服务 发现2.3.4版本存在一个后门漏洞  利用metasploit尝试进行漏洞利用  利用不成功。 samba再来分析139/445端口的samba服务：  同样利用metasploit进行漏洞利用：  漏洞利用成功，直接拿到root shell 分别找到user.txt和root.txt两枚Flag  what’s more上述是直接使用metaspl">
-<meta name="twitter:image" content="http://yoursite.com/2019/04/19/htb-lame-walkthrough/nmap_target.png">
+<meta name="twitter:title" content="htb-haircut-walkthrough">
+<meta name="twitter:description" content="user.txt查看靶机端口信息：  开放了80端口，访问web服务：  没有有效信息，进行子目录爆破：  找到uploads和exposed.php，访问exposed.php页面：  尝试改变输入为百度的域名，查看返回页面源码：  查看到了curl信息，猜测靶机通过curl命令来访问所输入的url 结合爆破出的uploads目录，有如下思路：通过curl上传php-shell文件，然后通过we">
+<meta name="twitter:image" content="http://yoursite.com/2019/04/21/htb-haircut-walkthrough/nmap.png">
 
 
 
@@ -128,13 +138,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/04/19/htb-lame-walkthrough/">
+  <link rel="canonical" href="http://yoursite.com/2019/04/21/htb-haircut-walkthrough/">
 
 
 
 
 
-  <title>htb lame walkthrough | Ha0Za1-Pages</title>
+  <title>htb-haircut-walkthrough | Ha0Za1-Pages</title>
   
 
 
@@ -251,7 +261,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/19/htb-lame-walkthrough/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/21/htb-haircut-walkthrough/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Ha0Za1">
@@ -268,7 +278,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">htb lame walkthrough</h1>
+          <h1 class="post-title" itemprop="name headline">htb-haircut-walkthrough</h1>
         
 
         <div class="post-meta">
@@ -280,8 +290,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-19T12:55:19+08:00">
-                2019-04-19
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-21T01:27:09+08:00">
+                2019-04-21
               </time>
             
 
@@ -318,25 +328,47 @@
       
 
       
-        <h2 id="ftp"><a href="#ftp" class="headerlink" title="ftp"></a>ftp</h2><p><strong>端口扫描</strong>：</p>
-<p><img src="nmap_target.png" alt="nmap_scan"></p>
-<p>首先分析21端口ftp服务</p>
-<p>发现2.3.4版本存在一个后门漏洞</p>
-<p><img src="searchsploit_vsftpd.png" alt="searchsploit_vsftpd"></p>
-<p>利用<strong>metasploit</strong>尝试进行漏洞利用</p>
-<p><img src="exploit_ftp.png" alt="ftp_exploit"></p>
-<p>利用不成功。</p>
-<h2 id="samba"><a href="#samba" class="headerlink" title="samba"></a>samba</h2><p>再来分析139/445端口的<strong>samba</strong>服务：</p>
-<p><img src="searchsploit_samba.png" alt="searchsploit_samba"></p>
-<p>同样利用<strong>metasploit</strong>进行漏洞利用：</p>
-<p><img src="samba_exploit.png" alt="metasploit_samba"></p>
-<p>漏洞利用成功，直接拿到root shell</p>
-<p>分别找到<strong>user.txt</strong>和<strong>root.txt</strong>两枚Flag</p>
-<p><img src="flag.png" alt="flag"></p>
-<h2 id="what’s-more"><a href="#what’s-more" class="headerlink" title="what’s more"></a>what’s more</h2><p>上述是直接使用metasploit实现的漏洞利用。</p>
-<p>还存在另外一种通过<strong>smbclient+nc</strong>获取shell的途径：</p>
-<p><img src="smbclient_nc_getshell.png" alt="smbclient_nc_getshell"></p>
-<p>可参考<a href="https://security.stackexchange.com/questions/177083/reverse-connection-metasploitable-2-kali-linux-samba-3-x-without-metasploit" target="_blank" rel="noopener">smb_reverse_shell</a></p>
+        <h2 id="user-txt"><a href="#user-txt" class="headerlink" title="user.txt"></a>user.txt</h2><p>查看靶机端口信息：</p>
+<p><img src="nmap.png" alt="nmap"></p>
+<p>开放了80端口，访问web服务：</p>
+<p><img src="main_page.png" alt="main_page"></p>
+<p>没有有效信息，进行子目录爆破：</p>
+<p><img src="dirbuster.png" alt="dirbuster"></p>
+<p>找到<strong>uploads</strong>和<strong>exposed.php</strong>，访问<strong>exposed.php</strong>页面：</p>
+<p><img src="exposed_php.png" alt="exposed_page"></p>
+<p>尝试改变输入为百度的域名，查看返回页面源码：</p>
+<p><img src="get_baidu.png" alt="get_baidu"></p>
+<p>查看到了<strong>curl</strong>信息，猜测靶机通过curl命令来访问所输入的url</p>
+<p>结合爆破出的<strong>uploads</strong>目录，有如下思路：通过curl上传php-shell文件，然后通过web访问获取到回连shell</p>
+<p>本地准备好php-shell，并开启web服务：</p>
+<p><img src="python_http.png" alt="python_http"></p>
+<p>发现直接通过输入框的方式，没有取得预期效果</p>
+<p><strong>burpsuite</strong>抓包查看：</p>
+<p><img src="burpsuite_original.png" alt="burpsuite_original"></p>
+<p>发现<strong>formurl</strong>信息，猜测靶机端按如下格式执行<code>curl $formurl</code>。</p>
+<p>因此为实现文件上传的功能，修改如下</p>
+<p><img src="burpsuite_upload.png" alt="burpsuite_upload"></p>
+<p>web访问<strong>uploads/resh.php</strong>，本地成功获取shell：</p>
+<p><img src="get_nc_shell.png" alt="nc_shell"></p>
+<p>成功拿到<strong>user.txt</strong>文件：</p>
+<p><img src="user_txt.png" alt="user_txt"></p>
+<h2 id="root-txt"><a href="#root-txt" class="headerlink" title="root.txt"></a>root.txt</h2><p>下一步尝试提权</p>
+<p>查找设置了<strong>SUID</strong>，且具有root权限的文件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find / -perm -4000 -user root -exec ls -ld &#123;&#125; \; 2&gt;/dev/null</span><br></pre></td></tr></table></figure>
+<p><img src="find_suid_root.png" alt="find_suid_root"></p>
+<p>尝试对<strong>screen</strong>程序进行利用</p>
+<p><code>searchsploit</code>结果如下：</p>
+<p><img src="searchsploit_screen.png" alt="searchsploit_screen"></p>
+<p>利用说明如下：</p>
+<p><img src="41154_sh.png" alt="41154_sh"></p>
+<p>建立2个c程序如下：</p>
+<p><img src="libhax_c_rootshell_c.png" alt="2_c"></p>
+<p>编译：</p>
+<p><img src="gcc.png" alt="gcc"></p>
+<p>靶机将<strong>libhax.so</strong>和<strong>rootshell</strong>拉取到tmp目录</p>
+<p><img src="wget_libhax_rootshell.png" alt="wget"></p>
+<p>然后按照exploit流程，实现提权操作，拿到<strong>root.txt</strong></p>
+<p><img src="exploit_root_txt.png" alt="exploit_root"></p>
 
       
     </div>
@@ -367,15 +399,15 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2019/04/19/htb-popcorn-walkthrough/" rel="next" title="htb-popcorn-walkthrough">
+                <i class="fa fa-chevron-left"></i> htb-popcorn-walkthrough
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/04/19/htb-popcorn-walkthrough/" rel="prev" title="htb-popcorn-walkthrough">
-                htb-popcorn-walkthrough <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -510,7 +542,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#ftp"><span class="nav-number">1.</span> <span class="nav-text">ftp</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#samba"><span class="nav-number">2.</span> <span class="nav-text">samba</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#what’s-more"><span class="nav-number">3.</span> <span class="nav-text">what’s more</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#user-txt"><span class="nav-number">1.</span> <span class="nav-text">user.txt</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#root-txt"><span class="nav-number">2.</span> <span class="nav-text">root.txt</span></a></li></ol></div>
             
 
           </div>
