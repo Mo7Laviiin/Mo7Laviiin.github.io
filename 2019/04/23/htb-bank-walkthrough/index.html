@@ -79,30 +79,30 @@
 
 
 
-<meta name="description" content="扫描端口信息：  直接访问80端口，没有有效信息 观察到开放了53端口-域名解析，因此，尝试利用dig进行反向域名解析：  发现两条重要的域名信息：cronos.htb,admin.cronos.htb，添加到本地hosts文件:  访问两个域名，其中admin.cronos.htb的访问页面如下：  尝试弱口令、子目录爆破，均未发现有价值线索 然而如此简陋的页面，尝试SQL注入 post两个参数">
+<meta name="description" content="扫描端口信息：  直接访问80端口没有有效信息。 由于开放了53端口DNS服务，因此尝试修改本地hosts文件：  访问bank.htb页面如下：  尝试弱口令不成功 爆破子目录：  发现了support.php,尝试访问，发现跳转到了上述login.php burpsuite抓包观察到这其中发生了302重定向跳转：  利用burpsuite修改respones头部的302：  成功来到suppo">
 <meta name="keywords" content="htb walkthrough">
 <meta property="og:type" content="article">
-<meta property="og:title" content="htb-cronos-walkthrough">
-<meta property="og:url" content="http://yoursite.com/2019/04/22/htb-cronos-walkthrough/index.html">
+<meta property="og:title" content="htb-bank-walkthrough">
+<meta property="og:url" content="http://yoursite.com/2019/04/23/htb-bank-walkthrough/index.html">
 <meta property="og:site_name" content="Ha0Za1-Pages">
-<meta property="og:description" content="扫描端口信息：  直接访问80端口，没有有效信息 观察到开放了53端口-域名解析，因此，尝试利用dig进行反向域名解析：  发现两条重要的域名信息：cronos.htb,admin.cronos.htb，添加到本地hosts文件:  访问两个域名，其中admin.cronos.htb的访问页面如下：  尝试弱口令、子目录爆破，均未发现有价值线索 然而如此简陋的页面，尝试SQL注入 post两个参数">
+<meta property="og:description" content="扫描端口信息：  直接访问80端口没有有效信息。 由于开放了53端口DNS服务，因此尝试修改本地hosts文件：  访问bank.htb页面如下：  尝试弱口令不成功 爆破子目录：  发现了support.php,尝试访问，发现跳转到了上述login.php burpsuite抓包观察到这其中发生了302重定向跳转：  利用burpsuite修改respones头部的302：  成功来到suppo">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/2019/04/22/htb-cronos-walkthrough/zenmap.png">
-<meta property="og:image" content="http://yoursite.com/2019/04/22/htb-cronos-walkthrough/dig_dns.png">
-<meta property="og:image" content="http://yoursite.com/2019/04/22/htb-cronos-walkthrough/hosts.png">
-<meta property="og:image" content="http://yoursite.com/2019/04/22/htb-cronos-walkthrough/login_page.png">
-<meta property="og:image" content="http://yoursite.com/2019/04/22/htb-cronos-walkthrough/post_argc.png">
-<meta property="og:image" content="http://yoursite.com/2019/04/22/htb-cronos-walkthrough/sqli_welcome_php.png">
-<meta property="og:image" content="http://yoursite.com/2019/04/22/htb-cronos-walkthrough/command_injection.png">
-<meta property="og:image" content="http://yoursite.com/2019/04/22/htb-cronos-walkthrough/reverse_shell_user_txt.png">
-<meta property="og:image" content="http://yoursite.com/2019/04/22/htb-cronos-walkthrough/crontab.png">
-<meta property="og:image" content="http://yoursite.com/2019/04/22/htb-cronos-walkthrough/artisan_php.png">
-<meta property="og:image" content="http://yoursite.com/2019/04/22/htb-cronos-walkthrough/root_txt.png">
-<meta property="og:updated_time" content="2019-04-22T15:54:16.577Z">
+<meta property="og:image" content="http://yoursite.com/2019/04/23/htb-bank-walkthrough/zenmap.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/23/htb-bank-walkthrough/hosts.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/23/htb-bank-walkthrough/login_php.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/23/htb-bank-walkthrough/gobuster.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/23/htb-bank-walkthrough/302_redirect.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/23/htb-bank-walkthrough/response_replace.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/23/htb-bank-walkthrough/support_php.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/23/htb-bank-walkthrough/php_cannot_upload.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/23/htb-bank-walkthrough/user_txt.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/23/htb-bank-walkthrough/suid.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/23/htb-bank-walkthrough/root_txt.png">
+<meta property="og:updated_time" content="2019-04-23T13:43:40.514Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="htb-cronos-walkthrough">
-<meta name="twitter:description" content="扫描端口信息：  直接访问80端口，没有有效信息 观察到开放了53端口-域名解析，因此，尝试利用dig进行反向域名解析：  发现两条重要的域名信息：cronos.htb,admin.cronos.htb，添加到本地hosts文件:  访问两个域名，其中admin.cronos.htb的访问页面如下：  尝试弱口令、子目录爆破，均未发现有价值线索 然而如此简陋的页面，尝试SQL注入 post两个参数">
-<meta name="twitter:image" content="http://yoursite.com/2019/04/22/htb-cronos-walkthrough/zenmap.png">
+<meta name="twitter:title" content="htb-bank-walkthrough">
+<meta name="twitter:description" content="扫描端口信息：  直接访问80端口没有有效信息。 由于开放了53端口DNS服务，因此尝试修改本地hosts文件：  访问bank.htb页面如下：  尝试弱口令不成功 爆破子目录：  发现了support.php,尝试访问，发现跳转到了上述login.php burpsuite抓包观察到这其中发生了302重定向跳转：  利用burpsuite修改respones头部的302：  成功来到suppo">
+<meta name="twitter:image" content="http://yoursite.com/2019/04/23/htb-bank-walkthrough/zenmap.png">
 
 
 
@@ -132,13 +132,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/04/22/htb-cronos-walkthrough/">
+  <link rel="canonical" href="http://yoursite.com/2019/04/23/htb-bank-walkthrough/">
 
 
 
 
 
-  <title>htb-cronos-walkthrough | Ha0Za1-Pages</title>
+  <title>htb-bank-walkthrough | Ha0Za1-Pages</title>
   
 
 
@@ -255,7 +255,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/22/htb-cronos-walkthrough/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/23/htb-bank-walkthrough/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Ha0Za1">
@@ -272,7 +272,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">htb-cronos-walkthrough</h1>
+          <h1 class="post-title" itemprop="name headline">htb-bank-walkthrough</h1>
         
 
         <div class="post-meta">
@@ -284,8 +284,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-22T23:51:15+08:00">
-                2019-04-22
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-23T21:30:43+08:00">
+                2019-04-23
               </time>
             
 
@@ -324,30 +324,32 @@
       
         <p>扫描端口信息：</p>
 <p><img src="zenmap.png" alt="zenmap"></p>
-<p>直接访问80端口，没有有效信息</p>
-<p>观察到开放了53端口-域名解析，因此，尝试利用<strong>dig</strong>进行反向域名解析：</p>
-<p><img src="dig_dns.png" alt="dig_dns"></p>
-<p>发现两条重要的域名信息：<code>cronos.htb,admin.cronos.htb</code>，添加到本地hosts文件:</p>
+<p>直接访问80端口没有有效信息。</p>
+<p>由于开放了53端口DNS服务，因此尝试修改本地hosts文件：</p>
 <p><img src="hosts.png" alt="hosts"></p>
-<p>访问两个域名，其中<code>admin.cronos.htb</code>的访问页面如下：</p>
-<p><img src="login_page.png" alt="login_page"></p>
-<p>尝试弱口令、子目录爆破，均未发现有价值线索</p>
-<p>然而如此简陋的页面，尝试SQL注入</p>
-<p>post两个参数分别为：<strong>username</strong>和<strong>password</strong></p>
-<p><img src="post_argc.png" alt="post_argc"></p>
-<p>构造post参数如下，成功实现sql注入，跳转到<code>welcome.php</code>页面：</p>
-<p><img src="sqli_welcome_php.png" alt="sqli_welcome"></p>
-<p>分析该页面，猜测可能存在命令行的注入：</p>
-<p><img src="command_injection.png" alt="command_injection"></p>
-<p>果然可利用~</p>
-<p>构造<code>reverse shell</code>，成功获得shell，并拿到<strong>user.txt</strong></p>
-<p><img src="reverse_shell_user_txt.png" alt="user_txt"></p>
-<p>下一步，查找可利用的提权信息</p>
-<p>在定时任务中发现可利用信息：</p>
-<p><img src="crontab.png" alt="crontab"></p>
-<p><code>/var/www/laravel/artisan</code>为php脚本文件，为root用户的定时任务，每分钟执行一次，切当前用户具有可写权限：</p>
-<p><img src="artisan_php.png" alt="php_artisan"></p>
-<p>因此向其中写入<code>php web reverse shell</code>，成功获得root shell，并拿到<strong>root.txt</strong>：</p>
+<p>访问<code>bank.htb</code>页面如下：</p>
+<p><img src="login_php.png" alt="login_php"></p>
+<p>尝试弱口令不成功</p>
+<p>爆破子目录：</p>
+<p><img src="gobuster.png" alt="dirbuster"></p>
+<p>发现了<code>support.php</code>,尝试访问，发现跳转到了上述<code>login.php</code></p>
+<p><code>burpsuite</code>抓包观察到这其中发生了302重定向跳转：</p>
+<p><img src="302_redirect.png" alt="302_redirect"></p>
+<p>利用<code>burpsuite</code>修改<code>respones</code>头部的302：</p>
+<p><img src="response_replace.png" alt="response_replace"></p>
+<p>成功来到<code>support.php</code>页面：</p>
+<p><img src="support_php.png" alt="support_php"></p>
+<p>发现文件上传功能，尝试上传Php文件：</p>
+<p><img src="php_cannot_upload.png" alt="php_cannot_upload"></p>
+<p>上传失败，在response里发现这样一句话：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- [DEBUG] I added the file extension .htb to execute as php for debugging purposes only [DEBUG] --&gt;</span><br></pre></td></tr></table></figure>
+<p>将后缀修改为.htb，成功上传</p>
+<p>访问上传文件，成功获取shell，拿到<strong>user.txt</strong></p>
+<p><img src="user_txt.png" alt="user_txt"></p>
+<p>查询靶机可利用的提权信息：</p>
+<p><img src="suid.png" alt="priv_check"></p>
+<p><strong>emergency</strong>程序具有SUID标志，且当前用户可执行</p>
+<p>利用该程序成功提权，拿到<strong>root.txt</strong></p>
 <p><img src="root_txt.png" alt="root_txt"></p>
 
       
@@ -379,8 +381,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/04/21/htb-haircut-walkthrough/" rel="next" title="htb-haircut-walkthrough">
-                <i class="fa fa-chevron-left"></i> htb-haircut-walkthrough
+              <a href="/2019/04/22/htb-cronos-walkthrough/" rel="next" title="htb-cronos-walkthrough">
+                <i class="fa fa-chevron-left"></i> htb-cronos-walkthrough
               </a>
             
           </div>
@@ -389,8 +391,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/04/23/htb-bank-walkthrough/" rel="prev" title="htb-bank-walkthrough">
-                htb-bank-walkthrough <i class="fa fa-chevron-right"></i>
+              <a href="/2019/04/23/htb-devel-walkthrough/" rel="prev" title="htb-devel-walkthrough">
+                htb-devel-walkthrough <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>

@@ -79,30 +79,32 @@
 
 
 
-<meta name="description" content="扫描端口信息：  直接访问80端口，没有有效信息 观察到开放了53端口-域名解析，因此，尝试利用dig进行反向域名解析：  发现两条重要的域名信息：cronos.htb,admin.cronos.htb，添加到本地hosts文件:  访问两个域名，其中admin.cronos.htb的访问页面如下：  尝试弱口令、子目录爆破，均未发现有价值线索 然而如此简陋的页面，尝试SQL注入 post两个参数">
+<meta name="description" content="扫描端口信息：  直接访问80端口web，是默认的IIS 7页面：  其中21端口的ftp服务允许匿名登录 因此，以anonymous登录到ftp：  成功登录，目标web架构为asp-iis 利用msfvenom生成aspx shell并通过ftp上传到靶机：   访问上传的页面，成功获得shell：  但是当前用户的权限太低：  搜集靶机可利用的漏洞信息：  这里选择exploit/windo">
 <meta name="keywords" content="htb walkthrough">
 <meta property="og:type" content="article">
-<meta property="og:title" content="htb-cronos-walkthrough">
-<meta property="og:url" content="http://yoursite.com/2019/04/22/htb-cronos-walkthrough/index.html">
+<meta property="og:title" content="htb-devel-walkthrough">
+<meta property="og:url" content="http://yoursite.com/2019/04/23/htb-devel-walkthrough/index.html">
 <meta property="og:site_name" content="Ha0Za1-Pages">
-<meta property="og:description" content="扫描端口信息：  直接访问80端口，没有有效信息 观察到开放了53端口-域名解析，因此，尝试利用dig进行反向域名解析：  发现两条重要的域名信息：cronos.htb,admin.cronos.htb，添加到本地hosts文件:  访问两个域名，其中admin.cronos.htb的访问页面如下：  尝试弱口令、子目录爆破，均未发现有价值线索 然而如此简陋的页面，尝试SQL注入 post两个参数">
+<meta property="og:description" content="扫描端口信息：  直接访问80端口web，是默认的IIS 7页面：  其中21端口的ftp服务允许匿名登录 因此，以anonymous登录到ftp：  成功登录，目标web架构为asp-iis 利用msfvenom生成aspx shell并通过ftp上传到靶机：   访问上传的页面，成功获得shell：  但是当前用户的权限太低：  搜集靶机可利用的漏洞信息：  这里选择exploit/windo">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/2019/04/22/htb-cronos-walkthrough/zenmap.png">
-<meta property="og:image" content="http://yoursite.com/2019/04/22/htb-cronos-walkthrough/dig_dns.png">
-<meta property="og:image" content="http://yoursite.com/2019/04/22/htb-cronos-walkthrough/hosts.png">
-<meta property="og:image" content="http://yoursite.com/2019/04/22/htb-cronos-walkthrough/login_page.png">
-<meta property="og:image" content="http://yoursite.com/2019/04/22/htb-cronos-walkthrough/post_argc.png">
-<meta property="og:image" content="http://yoursite.com/2019/04/22/htb-cronos-walkthrough/sqli_welcome_php.png">
-<meta property="og:image" content="http://yoursite.com/2019/04/22/htb-cronos-walkthrough/command_injection.png">
-<meta property="og:image" content="http://yoursite.com/2019/04/22/htb-cronos-walkthrough/reverse_shell_user_txt.png">
-<meta property="og:image" content="http://yoursite.com/2019/04/22/htb-cronos-walkthrough/crontab.png">
-<meta property="og:image" content="http://yoursite.com/2019/04/22/htb-cronos-walkthrough/artisan_php.png">
-<meta property="og:image" content="http://yoursite.com/2019/04/22/htb-cronos-walkthrough/root_txt.png">
-<meta property="og:updated_time" content="2019-04-22T15:54:16.577Z">
+<meta property="og:image" content="http://yoursite.com/2019/04/23/htb-devel-walkthrough/zenmap.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/23/htb-devel-walkthrough/iis7.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/23/htb-devel-walkthrough/ftp_login.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/23/htb-devel-walkthrough/aspx_shell.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/23/htb-devel-walkthrough/ftp_put.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/23/htb-devel-walkthrough/msf_shell.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/23/htb-devel-walkthrough/getuid_1.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/23/htb-devel-walkthrough/get_local_exploit_suggester.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/23/htb-devel-walkthrough/bulletin_ms10_015.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/23/htb-devel-walkthrough/ms10_015_kitrap0d.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/23/htb-devel-walkthrough/get_system.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/23/htb-devel-walkthrough/user_txt.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/23/htb-devel-walkthrough/root_txt.png">
+<meta property="og:updated_time" content="2019-04-23T13:36:17.720Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="htb-cronos-walkthrough">
-<meta name="twitter:description" content="扫描端口信息：  直接访问80端口，没有有效信息 观察到开放了53端口-域名解析，因此，尝试利用dig进行反向域名解析：  发现两条重要的域名信息：cronos.htb,admin.cronos.htb，添加到本地hosts文件:  访问两个域名，其中admin.cronos.htb的访问页面如下：  尝试弱口令、子目录爆破，均未发现有价值线索 然而如此简陋的页面，尝试SQL注入 post两个参数">
-<meta name="twitter:image" content="http://yoursite.com/2019/04/22/htb-cronos-walkthrough/zenmap.png">
+<meta name="twitter:title" content="htb-devel-walkthrough">
+<meta name="twitter:description" content="扫描端口信息：  直接访问80端口web，是默认的IIS 7页面：  其中21端口的ftp服务允许匿名登录 因此，以anonymous登录到ftp：  成功登录，目标web架构为asp-iis 利用msfvenom生成aspx shell并通过ftp上传到靶机：   访问上传的页面，成功获得shell：  但是当前用户的权限太低：  搜集靶机可利用的漏洞信息：  这里选择exploit/windo">
+<meta name="twitter:image" content="http://yoursite.com/2019/04/23/htb-devel-walkthrough/zenmap.png">
 
 
 
@@ -132,13 +134,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/04/22/htb-cronos-walkthrough/">
+  <link rel="canonical" href="http://yoursite.com/2019/04/23/htb-devel-walkthrough/">
 
 
 
 
 
-  <title>htb-cronos-walkthrough | Ha0Za1-Pages</title>
+  <title>htb-devel-walkthrough | Ha0Za1-Pages</title>
   
 
 
@@ -255,7 +257,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/22/htb-cronos-walkthrough/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/23/htb-devel-walkthrough/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Ha0Za1">
@@ -272,7 +274,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">htb-cronos-walkthrough</h1>
+          <h1 class="post-title" itemprop="name headline">htb-devel-walkthrough</h1>
         
 
         <div class="post-meta">
@@ -284,8 +286,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-22T23:51:15+08:00">
-                2019-04-22
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-23T21:33:49+08:00">
+                2019-04-23
               </time>
             
 
@@ -324,30 +326,30 @@
       
         <p>扫描端口信息：</p>
 <p><img src="zenmap.png" alt="zenmap"></p>
-<p>直接访问80端口，没有有效信息</p>
-<p>观察到开放了53端口-域名解析，因此，尝试利用<strong>dig</strong>进行反向域名解析：</p>
-<p><img src="dig_dns.png" alt="dig_dns"></p>
-<p>发现两条重要的域名信息：<code>cronos.htb,admin.cronos.htb</code>，添加到本地hosts文件:</p>
-<p><img src="hosts.png" alt="hosts"></p>
-<p>访问两个域名，其中<code>admin.cronos.htb</code>的访问页面如下：</p>
-<p><img src="login_page.png" alt="login_page"></p>
-<p>尝试弱口令、子目录爆破，均未发现有价值线索</p>
-<p>然而如此简陋的页面，尝试SQL注入</p>
-<p>post两个参数分别为：<strong>username</strong>和<strong>password</strong></p>
-<p><img src="post_argc.png" alt="post_argc"></p>
-<p>构造post参数如下，成功实现sql注入，跳转到<code>welcome.php</code>页面：</p>
-<p><img src="sqli_welcome_php.png" alt="sqli_welcome"></p>
-<p>分析该页面，猜测可能存在命令行的注入：</p>
-<p><img src="command_injection.png" alt="command_injection"></p>
-<p>果然可利用~</p>
-<p>构造<code>reverse shell</code>，成功获得shell，并拿到<strong>user.txt</strong></p>
-<p><img src="reverse_shell_user_txt.png" alt="user_txt"></p>
-<p>下一步，查找可利用的提权信息</p>
-<p>在定时任务中发现可利用信息：</p>
-<p><img src="crontab.png" alt="crontab"></p>
-<p><code>/var/www/laravel/artisan</code>为php脚本文件，为root用户的定时任务，每分钟执行一次，切当前用户具有可写权限：</p>
-<p><img src="artisan_php.png" alt="php_artisan"></p>
-<p>因此向其中写入<code>php web reverse shell</code>，成功获得root shell，并拿到<strong>root.txt</strong>：</p>
+<p>直接访问80端口web，是默认的IIS 7页面：</p>
+<p><img src="iis7.png" alt="iis7"></p>
+<p>其中21端口的ftp服务允许匿名登录</p>
+<p>因此，以<strong>anonymous</strong>登录到ftp：</p>
+<p><img src="ftp_login.png" alt="ftp_login"></p>
+<p>成功登录，目标web架构为asp-iis</p>
+<p>利用<code>msfvenom</code>生成<strong>aspx shell</strong>并通过ftp上传到靶机：</p>
+<p><img src="aspx_shell.png" alt="aspx_shell"></p>
+<p><img src="ftp_put.png" alt="ftp_put"></p>
+<p>访问上传的页面，成功获得shell：</p>
+<p><img src="msf_shell.png" alt="msfvenom"></p>
+<p>但是当前用户的权限太低：</p>
+<p><img src="getuid_1.png" alt="getuid_1"></p>
+<p>搜集靶机可利用的漏洞信息：</p>
+<p><img src="get_local_exploit_suggester.png" alt="local_exploit_suggester"></p>
+<p>这里选择<code>exploit/windows/local/ms10_015_kitrap0d</code></p>
+<p><img src="bulletin_ms10_015.png" alt="bulletin"></p>
+<p><img src="ms10_015_kitrap0d.png" alt="exploit_1"></p>
+<p>如图所示，漏洞是可以利用的，但由于没有设置地址信息，没有成功建立会话session</p>
+<p>下一步，设置好<code>LHOST</code>和<code>LPORT</code>参数，再次exploit：</p>
+<p><img src="get_system.png" alt="exploit_2"></p>
+<p>成功提权，获得system权限</p>
+<p>拿到Flag:</p>
+<p><img src="user_txt.png" alt="user_txt"></p>
 <p><img src="root_txt.png" alt="root_txt"></p>
 
       
@@ -379,8 +381,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/04/21/htb-haircut-walkthrough/" rel="next" title="htb-haircut-walkthrough">
-                <i class="fa fa-chevron-left"></i> htb-haircut-walkthrough
+              <a href="/2019/04/23/htb-bank-walkthrough/" rel="next" title="htb-bank-walkthrough">
+                <i class="fa fa-chevron-left"></i> htb-bank-walkthrough
               </a>
             
           </div>
@@ -388,10 +390,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/04/23/htb-bank-walkthrough/" rel="prev" title="htb-bank-walkthrough">
-                htb-bank-walkthrough <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
