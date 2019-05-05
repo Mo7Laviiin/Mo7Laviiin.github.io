@@ -79,26 +79,40 @@
 
 
 
-<meta name="description" content="ftp端口扫描：  首先分析21端口ftp服务 发现2.3.4版本存在一个后门漏洞  利用metasploit尝试进行漏洞利用  利用不成功。 samba再来分析139/445端口的samba服务：  同样利用metasploit进行漏洞利用：  漏洞利用成功，直接拿到root shell 分别找到user.txt和root.txt两枚Flag  what’s more上述是直接使用metaspl">
+<meta name="description" content="zenmap扫描端口信息：  访问80端口web服务：  dirbuster爆破网站子目录：  发现了moodle子目录，访问：  有teacher的提示，回到主页面查找线索  在页面源码中发现：  images/5.png似乎有异常，取回到本地观察：  5.png为一文本文件，提示了一组账户密码Giovanni:The4C00lTheacha 其中密码的最后一位丢失，因此生成一组密码字典，对登录">
 <meta name="keywords" content="htb walkthrough">
 <meta property="og:type" content="article">
-<meta property="og:title" content="htb lame walkthrough">
-<meta property="og:url" content="http://yoursite.com/2019/04/19/htb-lame-walkthrough/index.html">
+<meta property="og:title" content="htb-teacher-walkthrough">
+<meta property="og:url" content="http://yoursite.com/2019/05/05/htb-teacher-walkthrough/index.html">
 <meta property="og:site_name" content="Ha0Za1-Pages">
-<meta property="og:description" content="ftp端口扫描：  首先分析21端口ftp服务 发现2.3.4版本存在一个后门漏洞  利用metasploit尝试进行漏洞利用  利用不成功。 samba再来分析139/445端口的samba服务：  同样利用metasploit进行漏洞利用：  漏洞利用成功，直接拿到root shell 分别找到user.txt和root.txt两枚Flag  what’s more上述是直接使用metaspl">
+<meta property="og:description" content="zenmap扫描端口信息：  访问80端口web服务：  dirbuster爆破网站子目录：  发现了moodle子目录，访问：  有teacher的提示，回到主页面查找线索  在页面源码中发现：  images/5.png似乎有异常，取回到本地观察：  5.png为一文本文件，提示了一组账户密码Giovanni:The4C00lTheacha 其中密码的最后一位丢失，因此生成一组密码字典，对登录">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/2019/04/19/htb-lame-walkthrough/nmap_target.png">
-<meta property="og:image" content="http://yoursite.com/2019/04/19/htb-lame-walkthrough/searchsploit_vsftpd.png">
-<meta property="og:image" content="http://yoursite.com/2019/04/19/htb-lame-walkthrough/exploit_ftp.png">
-<meta property="og:image" content="http://yoursite.com/2019/04/19/htb-lame-walkthrough/searchsploit_samba.png">
-<meta property="og:image" content="http://yoursite.com/2019/04/19/htb-lame-walkthrough/samba_exploit.png">
-<meta property="og:image" content="http://yoursite.com/2019/04/19/htb-lame-walkthrough/flag.png">
-<meta property="og:image" content="http://yoursite.com/2019/04/19/htb-lame-walkthrough/smbclient_nc_getshell.png">
-<meta property="og:updated_time" content="2019-04-19T05:04:48.664Z">
+<meta property="og:image" content="http://yoursite.com/2019/05/05/htb-teacher-walkthrough/zenmap.png">
+<meta property="og:image" content="http://yoursite.com/2019/05/05/htb-teacher-walkthrough/default_pagepng.png">
+<meta property="og:image" content="http://yoursite.com/2019/05/05/htb-teacher-walkthrough/dirbuster.png">
+<meta property="og:image" content="http://yoursite.com/2019/05/05/htb-teacher-walkthrough/moodle_page.png">
+<meta property="og:image" content="http://yoursite.com/2019/05/05/htb-teacher-walkthrough/teacher_page.png">
+<meta property="og:image" content="http://yoursite.com/2019/05/05/htb-teacher-walkthrough/teacher_page_source.png">
+<meta property="og:image" content="http://yoursite.com/2019/05/05/htb-teacher-walkthrough/5_png.png">
+<meta property="og:image" content="http://yoursite.com/2019/05/05/htb-teacher-walkthrough/passwd_txt.png">
+<meta property="og:image" content="http://yoursite.com/2019/05/05/htb-teacher-walkthrough/error_content_len.png">
+<meta property="og:image" content="http://yoursite.com/2019/05/05/htb-teacher-walkthrough/wfuzz_login.png">
+<meta property="og:image" content="http://yoursite.com/2019/05/05/htb-teacher-walkthrough/login_success.png">
+<meta property="og:image" content="http://yoursite.com/2019/05/05/htb-teacher-walkthrough/user_shell.png">
+<meta property="og:image" content="http://yoursite.com/2019/05/05/htb-teacher-walkthrough/config_php.png">
+<meta property="og:image" content="http://yoursite.com/2019/05/05/htb-teacher-walkthrough/mysql_login.png">
+<meta property="og:image" content="http://yoursite.com/2019/05/05/htb-teacher-walkthrough/mysql_select.png">
+<meta property="og:image" content="http://yoursite.com/2019/05/05/htb-teacher-walkthrough/md5_decrypt.png">
+<meta property="og:image" content="http://yoursite.com/2019/05/05/htb-teacher-walkthrough/su_giovanni.png">
+<meta property="og:image" content="http://yoursite.com/2019/05/05/htb-teacher-walkthrough/user_txt.png">
+<meta property="og:image" content="http://yoursite.com/2019/05/05/htb-teacher-walkthrough/pspy_cron.png">
+<meta property="og:image" content="http://yoursite.com/2019/05/05/htb-teacher-walkthrough/backup_sh.png">
+<meta property="og:image" content="http://yoursite.com/2019/05/05/htb-teacher-walkthrough/ln_get_root.png">
+<meta property="og:updated_time" content="2019-05-05T14:02:19.699Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="htb lame walkthrough">
-<meta name="twitter:description" content="ftp端口扫描：  首先分析21端口ftp服务 发现2.3.4版本存在一个后门漏洞  利用metasploit尝试进行漏洞利用  利用不成功。 samba再来分析139/445端口的samba服务：  同样利用metasploit进行漏洞利用：  漏洞利用成功，直接拿到root shell 分别找到user.txt和root.txt两枚Flag  what’s more上述是直接使用metaspl">
-<meta name="twitter:image" content="http://yoursite.com/2019/04/19/htb-lame-walkthrough/nmap_target.png">
+<meta name="twitter:title" content="htb-teacher-walkthrough">
+<meta name="twitter:description" content="zenmap扫描端口信息：  访问80端口web服务：  dirbuster爆破网站子目录：  发现了moodle子目录，访问：  有teacher的提示，回到主页面查找线索  在页面源码中发现：  images/5.png似乎有异常，取回到本地观察：  5.png为一文本文件，提示了一组账户密码Giovanni:The4C00lTheacha 其中密码的最后一位丢失，因此生成一组密码字典，对登录">
+<meta name="twitter:image" content="http://yoursite.com/2019/05/05/htb-teacher-walkthrough/zenmap.png">
 
 
 
@@ -128,13 +142,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/04/19/htb-lame-walkthrough/">
+  <link rel="canonical" href="http://yoursite.com/2019/05/05/htb-teacher-walkthrough/">
 
 
 
 
 
-  <title>htb lame walkthrough | Ha0Za1-Pages</title>
+  <title>htb-teacher-walkthrough | Ha0Za1-Pages</title>
   
 
 
@@ -251,7 +265,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/19/htb-lame-walkthrough/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/05/htb-teacher-walkthrough/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Ha0Za1">
@@ -268,7 +282,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">htb lame walkthrough</h1>
+          <h1 class="post-title" itemprop="name headline">htb-teacher-walkthrough</h1>
         
 
         <div class="post-meta">
@@ -280,8 +294,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-19T12:55:19+08:00">
-                2019-04-19
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-05T21:59:15+08:00">
+                2019-05-05
               </time>
             
 
@@ -318,25 +332,54 @@
       
 
       
-        <h2 id="ftp"><a href="#ftp" class="headerlink" title="ftp"></a>ftp</h2><p><strong>端口扫描</strong>：</p>
-<p><img src="nmap_target.png" alt="nmap_scan"></p>
-<p>首先分析21端口ftp服务</p>
-<p>发现2.3.4版本存在一个后门漏洞</p>
-<p><img src="searchsploit_vsftpd.png" alt="searchsploit_vsftpd"></p>
-<p>利用<strong>metasploit</strong>尝试进行漏洞利用</p>
-<p><img src="exploit_ftp.png" alt="ftp_exploit"></p>
-<p>利用不成功。</p>
-<h2 id="samba"><a href="#samba" class="headerlink" title="samba"></a>samba</h2><p>再来分析139/445端口的<strong>samba</strong>服务：</p>
-<p><img src="searchsploit_samba.png" alt="searchsploit_samba"></p>
-<p>同样利用<strong>metasploit</strong>进行漏洞利用：</p>
-<p><img src="samba_exploit.png" alt="metasploit_samba"></p>
-<p>漏洞利用成功，直接拿到root shell</p>
-<p>分别找到<strong>user.txt</strong>和<strong>root.txt</strong>两枚Flag</p>
-<p><img src="flag.png" alt="flag"></p>
-<h2 id="what’s-more"><a href="#what’s-more" class="headerlink" title="what’s more"></a>what’s more</h2><p>上述是直接使用metasploit实现的漏洞利用。</p>
-<p>还存在另外一种通过<strong>smbclient+nc</strong>获取shell的途径：</p>
-<p><img src="smbclient_nc_getshell.png" alt="smbclient_nc_getshell"></p>
-<p>可参考<a href="https://security.stackexchange.com/questions/177083/reverse-connection-metasploitable-2-kali-linux-samba-3-x-without-metasploit" target="_blank" rel="noopener">smb_reverse_shell</a></p>
+        <p>zenmap扫描端口信息：</p>
+<p><img src="zenmap.png" alt="zenmap"></p>
+<p>访问80端口web服务：</p>
+<p><img src="default_pagepng.png" alt="default_page"></p>
+<p><strong>dirbuster</strong>爆破网站子目录：</p>
+<p><img src="dirbuster.png" alt="dirbuster"></p>
+<p>发现了<strong>moodle</strong>子目录，访问：</p>
+<p><img src="moodle_page.png" alt="moodle_page"></p>
+<p>有<strong>teacher</strong>的提示，回到主页面查找线索</p>
+<p><img src="teacher_page.png" alt="teacher_page"></p>
+<p>在页面源码中发现：</p>
+<p><img src="teacher_page_source.png" alt="teacher_page_source"></p>
+<p><code>images/5.png</code>似乎有异常，取回到本地观察：</p>
+<p><img src="5_png.png" alt="5_png"></p>
+<p><strong>5.png</strong>为一文本文件，提示了一组账户密码<code>Giovanni:The4C00lTheacha</code></p>
+<p>其中密码的最后一位丢失，因此生成一组密码字典，对登录过程进行爆破:</p>
+<p>（登录失败时的content-length为440，进行过滤）</p>
+<p><img src="passwd_txt.png" alt="passwd"></p>
+<p><img src="error_content_len.png" alt="error_content_len"></p>
+<p><img src="wfuzz_login.png" alt="wfuzz_login"></p>
+<p>拿到密码<code>Th4C00lTheacha#</code>，成功登录</p>
+<p><img src="login_success.png" alt="login_success"></p>
+<p>根据资料<a href="https://blog.ripstech.com/2018/moodle-remote-code-execution/" target="_blank" rel="noopener">Evil Teacher: Code Injection in Moodle</a>,对网站进行漏洞利用</p>
+<p>这里不详细赘述，具体过程可参考上述链接</p>
+<p>成功拿到reverse shell：</p>
+<p><img src="user_shell.png" alt="user_shell"></p>
+<p>查看网站目录下的文件，找到数据库配置文件信息：</p>
+<p><img src="config_php.png" alt="config_php"></p>
+<p>利用用户名和口令登录数据库：</p>
+<p><img src="mysql_login.png" alt="mysql_login"></p>
+<p>查找到以下信息：</p>
+<p><img src="mysql_select.png" alt="mysql_select"></p>
+<p>观察到最后一个哈希值，猜测可能为MD5</p>
+<p>利用在线网站进行MD5破解：</p>
+<p><img src="md5_decrypt.png" alt="md5_crack"></p>
+<p>利用该口令，将shell切换为<strong>giovanni</strong>用户：</p>
+<p><img src="su_giovanni.png" alt="su_giovanni"></p>
+<p>成功拿到user的flag:</p>
+<p><img src="user_txt.png" alt="user_txt"></p>
+<p>下一步尝试提权</p>
+<p>收集靶机内可利用的提权信息，利用<code>pspy</code>发现靶机内有<strong>root</strong>的定时任务：</p>
+<p><img src="pspy_cron.png" alt="pspy_cron"></p>
+<p>查看该任务脚本：</p>
+<p><img src="backup_sh.png" alt="backup_sh"></p>
+<p>最后一句命令表明赋予当前目录777权限</p>
+<p>因此，在该目录下创建一文件符号链接，链接到<code>/root</code>目录下</p>
+<p>经过定时任务的执行，链接成功，拿到<code>/root</code>目录下的flag</p>
+<p><img src="ln_get_root.png" alt="get_root"></p>
 
       
     </div>
@@ -367,15 +410,15 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2019/05/02/htb-october-walkthrough/" rel="next" title="htb-october-walkthrough">
+                <i class="fa fa-chevron-left"></i> htb-october-walkthrough
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/04/19/htb-popcorn-walkthrough/" rel="prev" title="htb-popcorn-walkthrough">
-                htb-popcorn-walkthrough <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -427,17 +470,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -500,22 +534,6 @@
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#ftp"><span class="nav-number">1.</span> <span class="nav-text">ftp</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#samba"><span class="nav-number">2.</span> <span class="nav-text">samba</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#what’s-more"><span class="nav-number">3.</span> <span class="nav-text">what’s more</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
