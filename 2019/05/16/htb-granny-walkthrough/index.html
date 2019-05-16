@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="htb walkthrough,">
 
 
 
@@ -79,16 +79,28 @@
 
 
 
-<meta name="description" content="余不等伞，亦不等雨停">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Ha0Za1-Pages">
-<meta property="og:url" content="http://yoursite.com/archives/2019/05/index.html">
+<meta name="description" content="扫描靶机端口信息：  发现开放了80端口，直接访问页面如下：  仔细观察端口扫描的结果发现靶机为IIS 6.0架构 猜测存在可利用漏洞，searchsploit结果如下：  直接利用metasploit中相关模块尝试渗透：  如果所示，成功拿到shell，但此时的shell存在一定的局限性，无法运行getuid等命令  因此，需要通过metasploit中的post/windows/manage/">
+<meta name="keywords" content="htb walkthrough">
+<meta property="og:type" content="article">
+<meta property="og:title" content="htb-granny-walkthrough">
+<meta property="og:url" content="http://yoursite.com/2019/05/16/htb-granny-walkthrough/index.html">
 <meta property="og:site_name" content="Ha0Za1-Pages">
-<meta property="og:description" content="余不等伞，亦不等雨停">
+<meta property="og:description" content="扫描靶机端口信息：  发现开放了80端口，直接访问页面如下：  仔细观察端口扫描的结果发现靶机为IIS 6.0架构 猜测存在可利用漏洞，searchsploit结果如下：  直接利用metasploit中相关模块尝试渗透：  如果所示，成功拿到shell，但此时的shell存在一定的局限性，无法运行getuid等命令  因此，需要通过metasploit中的post/windows/manage/">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2019/05/16/htb-granny-walkthrough/nmap.png">
+<meta property="og:image" content="http://yoursite.com/2019/05/16/htb-granny-walkthrough/default_page.png">
+<meta property="og:image" content="http://yoursite.com/2019/05/16/htb-granny-walkthrough/searchsploit.png">
+<meta property="og:image" content="http://yoursite.com/2019/05/16/htb-granny-walkthrough/get_shell.png">
+<meta property="og:image" content="http://yoursite.com/2019/05/16/htb-granny-walkthrough/getuid_deny.png">
+<meta property="og:image" content="http://yoursite.com/2019/05/16/htb-granny-walkthrough/session_migrate.png">
+<meta property="og:image" content="http://yoursite.com/2019/05/16/htb-granny-walkthrough/migrate_success.png">
+<meta property="og:image" content="http://yoursite.com/2019/05/16/htb-granny-walkthrough/exploit_suggester.png">
+<meta property="og:image" content="http://yoursite.com/2019/05/16/htb-granny-walkthrough/root_shell.png">
+<meta property="og:updated_time" content="2019-05-16T03:10:12.498Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Ha0Za1-Pages">
-<meta name="twitter:description" content="余不等伞，亦不等雨停">
+<meta name="twitter:title" content="htb-granny-walkthrough">
+<meta name="twitter:description" content="扫描靶机端口信息：  发现开放了80端口，直接访问页面如下：  仔细观察端口扫描的结果发现靶机为IIS 6.0架构 猜测存在可利用漏洞，searchsploit结果如下：  直接利用metasploit中相关模块尝试渗透：  如果所示，成功拿到shell，但此时的shell存在一定的局限性，无法运行getuid等命令  因此，需要通过metasploit中的post/windows/manage/">
+<meta name="twitter:image" content="http://yoursite.com/2019/05/16/htb-granny-walkthrough/nmap.png">
 
 
 
@@ -118,13 +130,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/archives/2019/05/">
+  <link rel="canonical" href="http://yoursite.com/2019/05/16/htb-granny-walkthrough/">
 
 
 
 
 
-  <title>归档 | Ha0Za1-Pages</title>
+  <title>htb-granny-walkthrough | Ha0Za1-Pages</title>
   
 
 
@@ -143,7 +155,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
@@ -227,317 +239,170 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
+  <div id="posts" class="posts-expand">
+    
 
-      <span class="archive-page-counter">
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/16/htb-granny-walkthrough/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ha0Za1">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.JPG">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ha0Za1-Pages">
+    </span>
+
+    
+      <header class="post-header">
+
         
         
+          <h1 class="post-title" itemprop="name headline">htb-granny-walkthrough</h1>
         
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-16T11:09:04+08:00">
+                2019-05-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
           
-        
-        嗯..! 目前共计 18 篇日志。 继续努力。
-      </span>
 
-      
-
-        
-        
-        
-
-        
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2019">2019</h1>
-          </div>
-        
-        
+            
+          
 
-        
+          
+          
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
+          
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/05/16/htb-valentine-walkthrough/" itemprop="url">
-              
-                <span itemprop="name">htb-valentine-walkthrough</span>
-              
-            </a>
-        
-      </h2>
+          
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-05-16T11:10:41+08:00" content="2019-05-16">
-          05-16
-        </time>
-      </div>
+          
 
-    </header>
-  </article>
+        </div>
+      </header>
+    
 
-
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/05/16/htb-granny-walkthrough/" itemprop="url">
-              
-                <span itemprop="name">htb-granny-walkthrough</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-05-16T11:09:04+08:00" content="2019-05-16">
-          05-16
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/05/14/htb-nibble-walkthrough/" itemprop="url">
-              
-                <span itemprop="name">htb-nibble-walkthrough</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-05-14T23:32:10+08:00" content="2019-05-14">
-          05-14
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+      
+        <p>扫描靶机端口信息：</p>
+<p><img src="nmap.png" alt="nmap"></p>
+<p>发现开放了80端口，直接访问页面如下：</p>
+<p><img src="default_page.png" alt="default_page"></p>
+<p>仔细观察端口扫描的结果发现靶机为IIS 6.0架构</p>
+<p>猜测存在可利用漏洞，searchsploit结果如下：</p>
+<p><img src="searchsploit.png" alt="searchsploit"></p>
+<p>直接利用metasploit中相关模块尝试渗透：</p>
+<p><img src="get_shell.png" alt="get_shell"></p>
+<p>如果所示，成功拿到shell，但此时的shell存在一定的局限性，无法运行<code>getuid</code>等命令</p>
+<p><img src="getuid_deny.png" alt="getuid_deny"></p>
+<p>因此，需要通过metasploit中的<code>post/windows/manage/migrate</code>模块实现当前session的迁移</p>
+<p><img src="session_migrate.png" alt="session_migrate"></p>
+<p><img src="migrate_success.png" alt="migrate_success"></p>
+<p><code>getuid</code>查看到当前权限较低，因此下一步需要查找靶机上可利用的提权信息</p>
+<p>这里直接利用Metasploit中的相关模块：</p>
+<p><img src="exploit_suggester.png" alt="exploit_suggester"></p>
+<p>根据搜集结果，尝试利用相关漏洞模块进行提权：</p>
+<p><img src="root_shell.png" alt="root_shell"></p>
+<p>如图所示，成功拿到root_shell</p>
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/05/09/htb-blue-walkthrough/" itemprop="url">
-              
-                <span itemprop="name">htb-blue-walkthrough</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-05-09T13:16:38+08:00" content="2019-05-09">
-          05-09
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/05/09/htb-vault-walkthrough/" itemprop="url">
-              
-                <span itemprop="name">htb-vault-walkthrough</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-05-09T09:22:35+08:00" content="2019-05-09">
-          05-09
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/05/06/weblogic-CNVD-C-2019-48814/" itemprop="url">
-              
-                <span itemprop="name">weblogic-CNVD-C-2019-48814</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-05-06T20:16:33+08:00" content="2019-05-06">
-          05-06
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/05/05/htb-teacher-walkthrough/" itemprop="url">
-              
-                <span itemprop="name">htb-teacher-walkthrough</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-05-05T21:59:15+08:00" content="2019-05-05">
-          05-05
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/05/02/htb-october-walkthrough/" itemprop="url">
-              
-                <span itemprop="name">htb-october-walkthrough</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-05-02T23:29:11+08:00" content="2019-05-02">
-          05-02
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
     </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/htb-walkthrough/" rel="tag"># htb walkthrough</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/14/htb-nibble-walkthrough/" rel="next" title="htb-nibble-walkthrough">
+                <i class="fa fa-chevron-left"></i> htb-nibble-walkthrough
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/05/16/htb-valentine-walkthrough/" rel="prev" title="htb-valentine-walkthrough">
+                htb-valentine-walkthrough <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -545,6 +410,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -771,6 +640,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
