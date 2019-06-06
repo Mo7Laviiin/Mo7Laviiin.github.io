@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="htb walkthrough,">
 
 
 
@@ -79,16 +79,32 @@
 
 
 
-<meta name="description" content="余不等伞，亦不等雨停">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Ha0Za1-Pages">
-<meta property="og:url" content="http://yoursite.com/tags/htb-walkthrough/page/2/index.html">
+<meta name="description" content="扫描端口信息：  开放了8080端口，web访问如下：  点击server status弹出如下界面：  尝试admin:admin口令，登录后页面如下：  在页面内发现如下信息：  猜测tomcat:s3cret为登录凭证，重新登录后即可访问如下页面：  发现可上传war file：  猜测可能潜在文件上传漏洞，google找到结果如下：  下一步，利用metasploit相关模块  首先利用a">
+<meta name="keywords" content="htb walkthrough">
+<meta property="og:type" content="article">
+<meta property="og:title" content="htb-jerry-walkthrough">
+<meta property="og:url" content="http://yoursite.com/2019/06/06/htb-jerry-walkthrough/index.html">
 <meta property="og:site_name" content="Ha0Za1-Pages">
-<meta property="og:description" content="余不等伞，亦不等雨停">
+<meta property="og:description" content="扫描端口信息：  开放了8080端口，web访问如下：  点击server status弹出如下界面：  尝试admin:admin口令，登录后页面如下：  在页面内发现如下信息：  猜测tomcat:s3cret为登录凭证，重新登录后即可访问如下页面：  发现可上传war file：  猜测可能潜在文件上传漏洞，google找到结果如下：  下一步，利用metasploit相关模块  首先利用a">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2019/06/06/htb-jerry-walkthrough/zenmap.png">
+<meta property="og:image" content="http://yoursite.com/2019/06/06/htb-jerry-walkthrough/default_page.png">
+<meta property="og:image" content="http://yoursite.com/2019/06/06/htb-jerry-walkthrough/authentication_required.png">
+<meta property="og:image" content="http://yoursite.com/2019/06/06/htb-jerry-walkthrough/server_status.png">
+<meta property="og:image" content="http://yoursite.com/2019/06/06/htb-jerry-walkthrough/access_deny.png">
+<meta property="og:image" content="http://yoursite.com/2019/06/06/htb-jerry-walkthrough/manager_page.png">
+<meta property="og:image" content="http://yoursite.com/2019/06/06/htb-jerry-walkthrough/deploy_warfile.png">
+<meta property="og:image" content="http://yoursite.com/2019/06/06/htb-jerry-walkthrough/google_tomcat.png">
+<meta property="og:image" content="http://yoursite.com/2019/06/06/htb-jerry-walkthrough/search_tomcat.png">
+<meta property="og:image" content="http://yoursite.com/2019/06/06/htb-jerry-walkthrough/credentials.png">
+<meta property="og:image" content="http://yoursite.com/2019/06/06/htb-jerry-walkthrough/exploit.png">
+<meta property="og:image" content="http://yoursite.com/2019/06/06/htb-jerry-walkthrough/getshell.png">
+<meta property="og:image" content="http://yoursite.com/2019/06/06/htb-jerry-walkthrough/flag.png">
+<meta property="og:updated_time" content="2019-06-06T07:55:32.957Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Ha0Za1-Pages">
-<meta name="twitter:description" content="余不等伞，亦不等雨停">
+<meta name="twitter:title" content="htb-jerry-walkthrough">
+<meta name="twitter:description" content="扫描端口信息：  开放了8080端口，web访问如下：  点击server status弹出如下界面：  尝试admin:admin口令，登录后页面如下：  在页面内发现如下信息：  猜测tomcat:s3cret为登录凭证，重新登录后即可访问如下页面：  发现可上传war file：  猜测可能潜在文件上传漏洞，google找到结果如下：  下一步，利用metasploit相关模块  首先利用a">
+<meta name="twitter:image" content="http://yoursite.com/2019/06/06/htb-jerry-walkthrough/zenmap.png">
 
 
 
@@ -118,13 +134,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/tags/htb-walkthrough/page/2/">
+  <link rel="canonical" href="http://yoursite.com/2019/06/06/htb-jerry-walkthrough/">
 
 
 
 
 
-  <title>标签: htb walkthrough | Ha0Za1-Pages</title>
+  <title>htb-jerry-walkthrough | Ha0Za1-Pages</title>
   
 
 
@@ -143,7 +159,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
@@ -227,238 +243,171 @@
           <div id="content" class="content">
             
 
+  <div id="posts" class="posts-expand">
+    
+
+  
+
   
   
   
-  <div class="post-block tag">
-
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>htb walkthrough<small>标签</small>
-        </h1>
-      </div>
-
-      
-        
 
   <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/06/htb-jerry-walkthrough/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ha0Za1">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.JPG">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ha0Za1-Pages">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2019/04/25/htb-bashed-walkthrough/" itemprop="url">
-              
-                <span itemprop="name">htb-bashed-walkthrough</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">htb-jerry-walkthrough</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-04-25T00:03:36+08:00" content="2019-04-25">
-          04-25
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-06T15:54:41+08:00">
+                2019-06-06
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/04/25/htb-grandpa-walkghrough/" itemprop="url">
-              
-                <span itemprop="name">htb-grandpa-walkghrough</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-04-25T00:00:34+08:00" content="2019-04-25">
-          04-25
-        </time>
-      </div>
-
-    </header>
-  </article>
-
+      
 
       
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/04/23/htb-devel-walkthrough/" itemprop="url">
-              
-                <span itemprop="name">htb-devel-walkthrough</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-04-23T21:33:49+08:00" content="2019-04-23">
-          04-23
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/04/23/htb-bank-walkthrough/" itemprop="url">
-              
-                <span itemprop="name">htb-bank-walkthrough</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-04-23T21:30:43+08:00" content="2019-04-23">
-          04-23
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/04/22/htb-cronos-walkthrough/" itemprop="url">
-              
-                <span itemprop="name">htb-cronos-walkthrough</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-04-22T23:51:15+08:00" content="2019-04-22">
-          04-22
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/04/21/htb-haircut-walkthrough/" itemprop="url">
-              
-                <span itemprop="name">htb-haircut-walkthrough</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-04-21T01:27:09+08:00" content="2019-04-21">
-          04-21
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/04/19/htb-popcorn-walkthrough/" itemprop="url">
-              
-                <span itemprop="name">htb-popcorn-walkthrough</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-04-19T18:55:57+08:00" content="2019-04-19">
-          04-19
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/04/19/htb-lame-walkthrough/" itemprop="url">
-              
-                <span itemprop="name">htb lame walkthrough</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-04-19T12:55:19+08:00" content="2019-04-19">
-          04-19
-        </time>
-      </div>
-
-    </header>
-  </article>
-
+        <p>扫描端口信息：</p>
+<p><img src="zenmap.png" alt="zenmap"></p>
+<p>开放了8080端口，web访问如下：</p>
+<p><img src="default_page.png" alt="default_page"></p>
+<p>点击<code>server status</code>弹出如下界面：</p>
+<p><img src="authentication_required.png" alt="authentication_required"></p>
+<p>尝试<strong>admin:admin</strong>口令，登录后页面如下：</p>
+<p><img src="server_status.png" alt="server_status"></p>
+<p>在页面内发现如下信息：</p>
+<p><img src="access_deny.png" alt="access_deny"></p>
+<p>猜测<strong>tomcat:s3cret</strong>为登录凭证，重新登录后即可访问如下页面：</p>
+<p><img src="manager_page.png" alt="manager_page"></p>
+<p>发现可上传war file：</p>
+<p><img src="deploy_warfile.png" alt="deploy_warfile"></p>
+<p>猜测可能潜在文件上传漏洞，google找到结果如下：</p>
+<p><img src="google_tomcat.png" alt="google_tomcat"></p>
+<p>下一步，利用metasploit相关模块</p>
+<p><img src="search_tomcat.png" alt="metasploit_search"></p>
+<p>首先利用<code>auxiliary/scanner/http/tomcat_mgr_login</code>模块可获取到前文的<code>tomcat:s3cret</code>口令：</p>
+<p><img src="credentials.png" alt="credentials"></p>
+<p>然后利用<code>exploit/multi/http/tomcat_mgr_upload</code>模块尝试获取shell:</p>
+<p><img src="exploit.png" alt="exploit"></p>
+<p><img src="getshell.png" alt="getshell"></p>
+<p>拿到flag:</p>
+<p><img src="flag.png" alt="get_flag"></p>
 
       
     </div>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/htb-walkthrough/" rel="tag"># htb walkthrough</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/16/htb-valentine-walkthrough/" rel="next" title="htb-valentine-walkthrough">
+                <i class="fa fa-chevron-left"></i> htb-valentine-walkthrough
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/tags/htb-walkthrough/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/tags/htb-walkthrough/">1</a><span class="page-number current">2</span>
-  </nav>
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -466,6 +415,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -692,6 +645,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
