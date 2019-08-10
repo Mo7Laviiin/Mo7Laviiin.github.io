@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="htb walkthrough,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="0x00 基本信息收集扫描端口信息：  访问80web页面：  发现页面为drupal框架 目录扫描结果如下：  进一步根据nmap扫描结果，在其CHANGELOG.TXT文件内发现版本信息：  searchsploit查找该框架是否存在可利用漏洞：  在结果中，找到可利用的RCE漏洞，下面分别对其中的两个漏洞进行分析利用 0x01 Drupal 7.x Module Services - Rem">
+<meta name="keywords" content="htb walkthrough">
+<meta property="og:type" content="article">
+<meta property="og:title" content="htb-bastard-walkthrough">
+<meta property="og:url" content="http://yoursite.com/2019/08/10/htb-bastard-walkthrough/index.html">
+<meta property="og:site_name" content="Ha0Za1-Pages">
+<meta property="og:description" content="0x00 基本信息收集扫描端口信息：  访问80web页面：  发现页面为drupal框架 目录扫描结果如下：  进一步根据nmap扫描结果，在其CHANGELOG.TXT文件内发现版本信息：  searchsploit查找该框架是否存在可利用漏洞：  在结果中，找到可利用的RCE漏洞，下面分别对其中的两个漏洞进行分析利用 0x01 Drupal 7.x Module Services - Rem">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2019/08/10/htb-bastard-walkthrough/nmap.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/10/htb-bastard-walkthrough/default_page.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/10/htb-bastard-walkthrough/dirsearch.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/10/htb-bastard-walkthrough/changlog.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/10/htb-bastard-walkthrough/searchsploit.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/10/htb-bastard-walkthrough/vim_41564.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/10/htb-bastard-walkthrough/php_41564.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/10/htb-bastard-walkthrough/json.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/10/htb-bastard-walkthrough/curl_cmd.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/10/htb-bastard-walkthrough/systeminfo.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/10/htb-bastard-walkthrough/smb_share.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/10/htb-bastard-walkthrough/user_shell_nc64.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/10/htb-bastard-walkthrough/ruby_error.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/10/htb-bastard-walkthrough/44449_proxy.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/10/htb-bastard-walkthrough/post_changelog.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/10/htb-bastard-walkthrough/get_burp.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/10/htb-bastard-walkthrough/ruby_ok.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/10/htb-bastard-walkthrough/nishang_shell.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/10/htb-bastard-walkthrough/get_root_shell.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/10/htb-bastard-walkthrough/flag.png">
+<meta property="og:updated_time" content="2019-08-10T12:35:18.882Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="htb-bastard-walkthrough">
+<meta name="twitter:description" content="0x00 基本信息收集扫描端口信息：  访问80web页面：  发现页面为drupal框架 目录扫描结果如下：  进一步根据nmap扫描结果，在其CHANGELOG.TXT文件内发现版本信息：  searchsploit查找该框架是否存在可利用漏洞：  在结果中，找到可利用的RCE漏洞，下面分别对其中的两个漏洞进行分析利用 0x01 Drupal 7.x Module Services - Rem">
+<meta name="twitter:image" content="http://yoursite.com/2019/08/10/htb-bastard-walkthrough/nmap.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/08/10/htb-bastard-walkthrough/">
+
+
+
+
+
+  <title>htb-bastard-walkthrough | Ha0Za1-Pages</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Ha0Za1-Pages</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/10/htb-bastard-walkthrough/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ha0Za1">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.JPG">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ha0Za1-Pages">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">htb-bastard-walkthrough</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-10T20:32:16+08:00">
+                2019-08-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="0x00-基本信息收集"><a href="#0x00-基本信息收集" class="headerlink" title="0x00 基本信息收集"></a>0x00 基本信息收集</h3><p>扫描端口信息：</p>
+<p><img src="nmap.png" alt="nmap"></p>
+<p>访问80web页面：</p>
+<p><img src="default_page.png" alt="default_page"></p>
+<p>发现页面为<code>drupal</code>框架</p>
+<p>目录扫描结果如下：</p>
+<p><img src="dirsearch.png" alt="dirsearch"></p>
+<p>进一步根据nmap扫描结果，在其<code>CHANGELOG.TXT</code>文件内发现版本信息：</p>
+<p><img src="changlog.png" alt="changelog_txt"></p>
+<p><code>searchsploit</code>查找该框架是否存在可利用漏洞：</p>
+<p><img src="searchsploit.png" alt="searchsploit"></p>
+<p>在结果中，找到可利用的RCE漏洞，下面分别对其中的两个漏洞进行分析利用</p>
+<h3 id="0x01-Drupal-7-x-Module-Services-Remote-Code-Execution"><a href="#0x01-Drupal-7-x-Module-Services-Remote-Code-Execution" class="headerlink" title="0x01 Drupal 7.x Module Services - Remote Code Execution"></a>0x01 Drupal 7.x Module Services - Remote Code Execution</h3><p>修改<code>php</code>文件部分内容：</p>
+<p><img src="vim_41564.png" alt="vim_41564"></p>
+<p>然后执行程序：</p>
+<p><img src="php_41564.png" alt="php_41564"></p>
+<p>得到两个json文件，其文件内容如下：</p>
+<p><img src="json.png" alt="json"></p>
+<p>此时，我们已经在目标机器内写入一个<code>mo.php</code>文件，且能够执行cmd：</p>
+<p><img src="curl_cmd.png" alt="curl_php"></p>
+<p><img src="systeminfo.png" alt="systeminfo"></p>
+<p>目标靶机为windows Server系列。</p>
+<p>在本地机器建立smb共享，将静态编译的nc64.exe进行共享，借此获得user shell</p>
+<p>samba的配置文件和相关过程如下：</p>
+<p><img src="smb_share.png" alt="smb_share"></p>
+<p><img src="user_shell_nc64.png" alt="user_shell_nc"></p>
+<h3 id="0x02-Drupal-lt-8-3-9-lt-8-4-6-lt-8-5-1-‘Drupalgeddon2’-Remote-Code-Execution"><a href="#0x02-Drupal-lt-8-3-9-lt-8-4-6-lt-8-5-1-‘Drupalgeddon2’-Remote-Code-Execution" class="headerlink" title="0x02 Drupal &lt; 8.3.9 / &lt; 8.4.6 / &lt; 8.5.1 - ‘Drupalgeddon2’ Remote Code Execution"></a>0x02 Drupal &lt; 8.3.9 / &lt; 8.4.6 / &lt; 8.5.1 - ‘Drupalgeddon2’ Remote Code Execution</h3><p>对于该漏洞，可直接找到ruby利用脚本，运行如下：</p>
+<p><img src="ruby_error.png" alt="ruby"></p>
+<p>没有找到<code>CHANGELOG.txt</code>文件，尝试查找原因：</p>
+<p>修改ruby利用脚本的proxy设置，再次运行脚本，利用burpsuite截获漏洞利用过程的数据包：</p>
+<p><img src="44449_proxy.png" alt="proxy_edit"></p>
+<p><img src="post_changelog.png" alt="post_changelog"></p>
+<p>发现请求changelog.txt文件是POST请求，而正常访问时为GET方式：</p>
+<p><img src="get_burp.png" alt="get_changelog"></p>
+<p>因此，利用burp截获并修改POST为GET，成功获取shell：</p>
+<p><img src="ruby_ok.png" alt="ruby_ok"></p>
+<p>此时，如脚本所提示的，拿到的是一个ugly shell。</p>
+<p>这里可以进一步应用<a href="https://github.com/samratashok/nishang" target="_blank" rel="noopener">nishang powershell</a></p>
+<p>首先拉取其<code>Invoke-PowerShellTcp.ps1</code>脚本到本地，然后根据其提示在脚本最后加入脚本调用，随后本地开启小型web服务和nc端口监听，利用已有的ugly shell执行脚本的下载和执行操作，拿到shell:</p>
+<p><img src="nishang_shell.png" alt="nishang_shell"></p>
+<h3 id="0x03-privilege-escalation"><a href="#0x03-privilege-escalation" class="headerlink" title="0x03 privilege escalation"></a>0x03 privilege escalation</h3><p>根据获得的systeminfo系统信息，可利用<code>MS15-051</code>来实现提权操作</p>
+<p>相关信息可参考<a href="https://github.com/SecWiki/windows-kernel-exploits/tree/master/MS15-051" target="_blank" rel="noopener">https://github.com/SecWiki/windows-kernel-exploits/tree/master/MS15-051</a></p>
+<p>依然利用上文中的思想，提权的二进制程序进行smb共享，然后实现shell提权：</p>
+<p><img src="get_root_shell.png" alt="get_root_shell"></p>
+<p>拿到flag:</p>
+<p><img src="flag.png" alt="flag"></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/htb-walkthrough/" rel="tag"># htb walkthrough</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/08/10/htb-arctic-walkthrough/" rel="next" title="htb-arctic-walkthrough">
+                <i class="fa fa-chevron-left"></i> htb-arctic-walkthrough
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/08/10/htb-mirai-walkthrough/" rel="prev" title="htb-mirai-walkthrough">
+                htb-mirai-walkthrough <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.JPG" alt="Ha0Za1">
+            
+              <p class="site-author-name" itemprop="name">Ha0Za1</p>
+              <p class="site-description motion-element" itemprop="description">余不等伞，亦不等雨停</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/Mo7Laviiin" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#0x00-基本信息收集"><span class="nav-number">1.</span> <span class="nav-text">0x00 基本信息收集</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x01-Drupal-7-x-Module-Services-Remote-Code-Execution"><span class="nav-number">2.</span> <span class="nav-text">0x01 Drupal 7.x Module Services - Remote Code Execution</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x02-Drupal-lt-8-3-9-lt-8-4-6-lt-8-5-1-‘Drupalgeddon2’-Remote-Code-Execution"><span class="nav-number">3.</span> <span class="nav-text">0x02 Drupal &lt; 8.3.9 / &lt; 8.4.6 / &lt; 8.5.1 - ‘Drupalgeddon2’ Remote Code Execution</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x03-privilege-escalation"><span class="nav-number">4.</span> <span class="nav-text">0x03 privilege escalation</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">mo7laviiin</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
