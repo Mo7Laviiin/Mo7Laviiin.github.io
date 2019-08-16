@@ -79,24 +79,32 @@
 
 
 
-<meta name="description" content="扫描端口信息：  发现开放了139和445端口 猜测smb可能潜在可利用漏洞 利用nmap-smb相关脚本尝试进行漏洞扫描   发现存在ms17-010，即EternalBlue 利用metasploit的exploit/windows/smb/ms17-010相关模块尝试exploit  拿到flag">
+<meta name="description" content="扫描端口信息：  从21ftp端口入手，直接匿名访问：  浏览发现两个文件backup.mdb,Access Control.zip，拉回本地分析  不晓得为啥直接用ftp下载回来的backup.mdb文件不完整 换用wget方式直接把ftp整个镜像拉回本地：  利用mdb-tools查看mdb数据库信息：  查看数据库表时发现auth_user表，导出：  发现了几组身份凭证信息 再浏览一下Ac">
 <meta name="keywords" content="htb walkthrough">
 <meta property="og:type" content="article">
-<meta property="og:title" content="htb-blue-walkthrough">
-<meta property="og:url" content="http://yoursite.com/2019/05/09/htb-blue-walkthrough/index.html">
+<meta property="og:title" content="htb-access-walkthrough">
+<meta property="og:url" content="http://yoursite.com/2019/08/16/htb-access-walkthrough/index.html">
 <meta property="og:site_name" content="Ha0Za1-Pages">
-<meta property="og:description" content="扫描端口信息：  发现开放了139和445端口 猜测smb可能潜在可利用漏洞 利用nmap-smb相关脚本尝试进行漏洞扫描   发现存在ms17-010，即EternalBlue 利用metasploit的exploit/windows/smb/ms17-010相关模块尝试exploit  拿到flag">
+<meta property="og:description" content="扫描端口信息：  从21ftp端口入手，直接匿名访问：  浏览发现两个文件backup.mdb,Access Control.zip，拉回本地分析  不晓得为啥直接用ftp下载回来的backup.mdb文件不完整 换用wget方式直接把ftp整个镜像拉回本地：  利用mdb-tools查看mdb数据库信息：  查看数据库表时发现auth_user表，导出：  发现了几组身份凭证信息 再浏览一下Ac">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/2019/05/09/htb-blue-walkthrough/zenmap.jpg">
-<meta property="og:image" content="http://yoursite.com/2019/05/09/htb-blue-walkthrough/smb_vuln.jpg">
-<meta property="og:image" content="http://yoursite.com/2019/05/09/htb-blue-walkthrough/nmap_smb_vuln.jpg">
-<meta property="og:image" content="http://yoursite.com/2019/05/09/htb-blue-walkthrough/exploit.jpg">
-<meta property="og:image" content="http://yoursite.com/2019/05/09/htb-blue-walkthrough/flag.jpg">
-<meta property="og:updated_time" content="2019-05-09T05:18:18.794Z">
+<meta property="og:image" content="http://yoursite.com/2019/08/16/htb-access-walkthrough/nmap.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/16/htb-access-walkthrough/ftp_login.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/16/htb-access-walkthrough/file_info.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/16/htb-access-walkthrough/wget_ftp.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/16/htb-access-walkthrough/mdb_tables.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/16/htb-access-walkthrough/mdb_export.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/16/htb-access-walkthrough/access_control_unzip.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/16/htb-access-walkthrough/pst.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/16/htb-access-walkthrough/mbox.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/16/htb-access-walkthrough/user_txt.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/16/htb-access-walkthrough/moshell.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/16/htb-access-walkthrough/net_user_admin.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/16/htb-access-walkthrough/root_flag.png">
+<meta property="og:updated_time" content="2019-08-16T13:41:17.929Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="htb-blue-walkthrough">
-<meta name="twitter:description" content="扫描端口信息：  发现开放了139和445端口 猜测smb可能潜在可利用漏洞 利用nmap-smb相关脚本尝试进行漏洞扫描   发现存在ms17-010，即EternalBlue 利用metasploit的exploit/windows/smb/ms17-010相关模块尝试exploit  拿到flag">
-<meta name="twitter:image" content="http://yoursite.com/2019/05/09/htb-blue-walkthrough/zenmap.jpg">
+<meta name="twitter:title" content="htb-access-walkthrough">
+<meta name="twitter:description" content="扫描端口信息：  从21ftp端口入手，直接匿名访问：  浏览发现两个文件backup.mdb,Access Control.zip，拉回本地分析  不晓得为啥直接用ftp下载回来的backup.mdb文件不完整 换用wget方式直接把ftp整个镜像拉回本地：  利用mdb-tools查看mdb数据库信息：  查看数据库表时发现auth_user表，导出：  发现了几组身份凭证信息 再浏览一下Ac">
+<meta name="twitter:image" content="http://yoursite.com/2019/08/16/htb-access-walkthrough/nmap.png">
 
 
 
@@ -126,13 +134,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/05/09/htb-blue-walkthrough/">
+  <link rel="canonical" href="http://yoursite.com/2019/08/16/htb-access-walkthrough/">
 
 
 
 
 
-  <title>htb-blue-walkthrough | Ha0Za1-Pages</title>
+  <title>htb-access-walkthrough | Ha0Za1-Pages</title>
   
 
 
@@ -249,7 +257,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/09/htb-blue-walkthrough/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/16/htb-access-walkthrough/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Ha0Za1">
@@ -266,7 +274,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">htb-blue-walkthrough</h1>
+          <h1 class="post-title" itemprop="name headline">htb-access-walkthrough</h1>
         
 
         <div class="post-meta">
@@ -278,8 +286,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-09T13:16:38+08:00">
-                2019-05-09
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-16T21:40:15+08:00">
+                2019-08-16
               </time>
             
 
@@ -317,17 +325,39 @@
 
       
         <p>扫描端口信息：</p>
-<p><img src="zenmap.jpg" alt="zenmap"></p>
-<p>发现开放了139和445端口</p>
-<p>猜测smb可能潜在可利用漏洞</p>
-<p>利用nmap-smb相关脚本尝试进行漏洞扫描</p>
-<p><img src="smb_vuln.jpg" alt="smb_vuln"></p>
-<p><img src="nmap_smb_vuln.jpg" alt="nmap_smb_vuln"></p>
-<p>发现存在<code>ms17-010</code>，即<strong>EternalBlue</strong></p>
-<p>利用metasploit的exploit/windows/smb/ms17-010相关模块尝试exploit</p>
-<p><img src="exploit.jpg" alt="exploit"></p>
-<p>拿到flag</p>
-<p><img src="flag.jpg" alt="flag"></p>
+<p><img src="nmap.png" alt="nmap"></p>
+<p>从21ftp端口入手，直接匿名访问：</p>
+<p><img src="ftp_login.png" alt="ftp_login"></p>
+<p>浏览发现两个文件<code>backup.mdb,Access Control.zip</code>，拉回本地分析</p>
+<p><img src="file_info.png" alt="file_info"></p>
+<p>不晓得为啥直接用ftp下载回来的backup.mdb文件不完整</p>
+<p>换用wget方式直接把ftp整个镜像拉回本地：</p>
+<p><img src="wget_ftp.png" alt="ftp_wget"></p>
+<p>利用mdb-tools查看mdb数据库信息：</p>
+<p><img src="mdb_tables.png" alt="mdb_tables"></p>
+<p>查看数据库表时发现<code>auth_user</code>表，导出：</p>
+<p><img src="mdb_export.png" alt="mdb_export"></p>
+<p>发现了几组身份凭证信息</p>
+<p>再浏览一下<code>Access Control.zip</code>，成功利用<code>access4u@security</code>解压：</p>
+<p><img src="access_control_unzip.png" alt="unzip_zip"></p>
+<p><img src="pst.png" alt="pst"></p>
+<p>解压出为一outlook 的pst文件</p>
+<p>readpst将其转换为mbox文件后查看内容：</p>
+<p><img src="mbox.png" alt="mbox"></p>
+<p>发现一组身份凭证：<code>security:4Cc3ssC0ntr0ller</code></p>
+<p>由于靶机还开放了23telnet端口，利用上述身份凭证成功登陆，并拿到user flag:</p>
+<p><img src="user_txt.png" alt="user_flag"></p>
+<p>下一步需尝试提权操作：</p>
+<p>telnet拿到的shell好难用。。。转换一下：</p>
+<p><img src="moshell.png" alt="moshell"></p>
+<p>继续~</p>
+<p>查看管理员的账户属性时有如下发现：</p>
+<p><img src="net_user_admin.png" alt="net_user"></p>
+<p>我们不需要知道管理员密码即可通过runas执行命令</p>
+<p>因此，继续利用powershell上传一个编译好的nc.exe，然后利用runas执行回连操作</p>
+<p>其中<code>/savecred</code>参数表示不必询问账户密码</p>
+<p><img src="root_flag.png" alt="get_root"></p>
+<p>成功拿到flag.</p>
 
       
     </div>
@@ -358,8 +388,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/05/09/htb-vault-walkthrough/" rel="next" title="htb-vault-walkthrough">
-                <i class="fa fa-chevron-left"></i> htb-vault-walkthrough
+              <a href="/2019/08/15/htb-active-walkthrough/" rel="next" title="htb-active-walkthrough">
+                <i class="fa fa-chevron-left"></i> htb-active-walkthrough
               </a>
             
           </div>
@@ -367,10 +397,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/05/14/htb-nibble-walkthrough/" rel="prev" title="htb-nibble-walkthrough">
-                htb-nibble-walkthrough <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
