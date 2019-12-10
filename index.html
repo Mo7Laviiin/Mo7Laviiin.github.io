@@ -313,18 +313,15 @@
       
         
           
-          扫描靶机端口信息：
+          扫描端口信息：
 
-只开放了一个80端口：
+访问80端口web页面如下：
 
-端口扫描的结果中，存在一个.git目录为git仓库：
+利用burpsuite发现可利用其分别向dirRead.php和fileRead.php页面post数据：
 
-在config配置文件中，发现以下信息：
 
-有一仓库http://git.canape.htb/simpsons.git
-先修改本地Host文件，然后访问仓库：
-
-查看__init__.py源码信
+由此猜测，可尝试LFI(local file inclusion)，且靶机可能对路径字符串进行了过滤处理
+在dirRead.php和fil
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -450,15 +447,18 @@
       
         
           
-          扫描端口信息：
+          扫描靶机端口信息：
 
-访问80端口web页面如下：
+只开放了一个80端口：
 
-利用burpsuite发现可利用其分别向dirRead.php和fileRead.php页面post数据：
+端口扫描的结果中，存在一个.git目录为git仓库：
 
+在config配置文件中，发现以下信息：
 
-由此猜测，可尝试LFI(local file inclusion)，且靶机可能对路径字符串进行了过滤处理
-在dirRead.php和fil
+有一仓库http://git.canape.htb/simpsons.git
+先修改本地Host文件，然后访问仓库：
+
+查看__init__.py源码信
           ...
           <!--noindex-->
           <div class="post-button text-center">
